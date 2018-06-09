@@ -1,0 +1,90 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nsamizi Institute Payroll Application</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/app.css' %}" rel="stylesheet">
+</head>
+<body>
+<div id="wrapper">
+    {# left side navigation #}
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <div class="app-name">
+                            <span class="block m-t-xs">
+                                <strong class="font-bold">NSAMIZ INSTITUTE PAYROLL APPLICATION</strong>
+                            </span>
+                        </div>
+
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear">
+                                <span class="block m-t-xs">
+                                    <strong class="font-bold">David Williams</strong>
+                                </span>
+                                <span class="text-muted text-xs block">Art Director</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="logo-element">
+                        NI
+                    </div>
+                <li class="#">
+                    <a href="#"><i class="glyphicon glyphicon-list-alt"></i> <span class="nav-label">Payrolls</span> </a>
+                </li>
+                <li class="#">
+                    <a href="#"><i class="glyphicon glyphicon-user"></i> <span class="nav-label">Employees</span> </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="page-wrapper" class="gray-bg ">
+        {# top navigation #}
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="glyphicon glyphicon-menu-hamburger"></i></a>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <span class="m-r-sm text-muted welcome-message" data-i18n="topnav.welcometext">Nsamizi Institute Payroll</span>
+                    </li>
+                    <li>
+                        <a href="#"><i class="glyphicon glyphicon-log-out"></i> Log out</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+
+        {# footer #}
+        <div class="footer">
+            <div class="pull-right">MJ</div>
+            <div><strong>Copyright</strong> Blend. &copy; 2018</div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+<script src="{% static 'js/slimscroll/jquery.slimscroll.js' %}"></script>
+<script src="{% static 'js/metismenu/jquery.metisMenu.js' %}"></script>
+<script src="{% static 'js/pace/pace.min.js' %}"></script>
+<script src="{% static 'js/inspinia.js' %}"></script>
+</body>
+</html>
