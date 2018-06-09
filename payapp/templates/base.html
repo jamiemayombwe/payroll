@@ -9,6 +9,9 @@
     <link href="{% static 'css/animate.css' %}" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <link href="{% static 'css/app.css' %}" rel="stylesheet">
+
+    {#block to load indicidual css in the different templates#}
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
 <div id="wrapper">
@@ -24,23 +27,25 @@
                             </span>
                         </div>
 
+                        {% if user.is_authenticated %}
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear">
                                 <span class="block m-t-xs">
-                                    <strong class="font-bold">David Williams</strong>
+                                    <strong class="font-bold">{{ user.username }}</strong>
                                 </span>
                                 <span class="text-muted text-xs block">Art Director</span>
                             </span>
                         </a>
+                        {% endif %}
                     </div>
                     <div class="logo-element">
                         NI
                     </div>
-                <li class="#">
-                    <a href="#"><i class="glyphicon glyphicon-list-alt"></i> <span class="nav-label">Payrolls</span> </a>
+                <li {% if view.active == 'home_active' %}class="active" {% endif %}>
+                    <a href="{% url 'home' %}"><i class="glyphicon glyphicon-list-alt"></i> <span class="nav-label">Payrolls</span> </a>
                 </li>
-                <li class="#">
-                    <a href="#"><i class="glyphicon glyphicon-user"></i> <span class="nav-label">Employees</span> </a>
+                <li {% if view.active == 'employees_active' %}class="active" {% endif %}>
+                    <a href="{% url 'employees' %}"><i class="glyphicon glyphicon-user"></i> <span class="nav-label">Employees</span> </a>
                 </li>
             </ul>
         </div>
@@ -73,12 +78,11 @@
         {# footer #}
         <div class="footer">
             <div class="pull-right">MJ</div>
-            <div><strong>Copyright</strong> Blend. &copy; 2018</div>
+            <div><strong>Copyright</strong> Blend. &copy; {% now "Y" %}</div>
         </div>
     </div>
 
 </div>
-
 
 <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.js' %}"></script>
@@ -86,5 +90,8 @@
 <script src="{% static 'js/metismenu/jquery.metisMenu.js' %}"></script>
 <script src="{% static 'js/pace/pace.min.js' %}"></script>
 <script src="{% static 'js/inspinia.js' %}"></script>
+
+{#block to load individual js in the different templates#}
+{% block extra_js %}{% endblock %}
 </body>
 </html>
