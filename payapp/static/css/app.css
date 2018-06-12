@@ -2,3 +2,7 @@
     padding-bottom: 20px;
     color: #DFE4ED;
 }
+
+.clickable-row:hover{
+    cursor: pointer;
+}

@@ -13,7 +13,7 @@
                 <div class="ibox-title">
                     <h5>Employees</h5>
                     <div class="ibox-tools">
-                        <a class="btn btn-sm btn-success" href="#" >New Employee</a>
+                        <a class="btn btn-sm btn-success" href="{% url 'create_employee' %}" >New Employee</a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -30,20 +30,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="gradeX">
-                                {% for employee in view.employees %}
-                                    <td>{{ employee.name }}</td>
-                                    <td>{{ employee.title }}</td>
-                                    <td>{{ employee.gross_income }}</td>
+                            {% for employee in view.employees %}
+                                <tr class="clickable-row" data-href="{% url 'employee_detail' employee.id %}">
+                                <td>{{ employee.name }}</td>
+                                <td>{{ employee.title }}</td>
+                                <td>{{ employee.gross_income }}</td>
 {#                                    <td>{{ employee.name }}</td>#}
-                                    <td>
-                                        {% if employee.active %}<span class="glyphicon glyphicon-ok-sign text-navy" ></span>
-                                        {% else %}<span class="glyphicon glyphicon-remove-sign text-danger" ></span>
-                                        {% endif %}
-                                    </td>
-                                    <td><a href="#"><span class="glyphicon glyphicon-pencil text-success" ></span></a></td>
-                                {% endfor %}
-                            </tr>
+                                <td>
+                                    {% if employee.active %}<span class="glyphicon glyphicon-ok-sign text-navy" ></span>
+                                    {% else %}<span class="glyphicon glyphicon-remove-sign text-danger" ></span>
+                                    {% endif %}
+                                </td>
+{#                                    <td><a href="{% url 'edit_employee' employee.id %}" data-toggle="modal" data-target="#employeeFormModal"><span class="glyphicon glyphicon-pencil text-success" ></span></a></td>#}
+                                <td><a href="{% url 'edit_employee' employee.id %}"><span class="glyphicon glyphicon-pencil text-success" ></span></a></td>
+                                </tr>
+                            {% endfor %}
                         </tbody>
                         <tfoot>
                             <tr>
@@ -62,6 +63,8 @@
         </div>
     </div>
 
+    {# div to hold the form dialog #}
+    <div class="modal inmodal" id="employeeFormModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
 {% endblock %}
 
 {% block extra_js %}
@@ -94,7 +97,9 @@
 
             });
 
-
+            $(".clickable-row").click(function() {
+                window.location = $(this).data("href");
+            });
 
         });
 
