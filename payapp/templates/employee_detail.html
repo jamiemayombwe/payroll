@@ -1,5 +1,75 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block content %}
-    Hello detail
+    <div class="wrapper wrapper-content">
+        <div class="row animated fadeInRight">
+            <div class="col-md-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Profile Detail</h5>
+                    </div>
+                    <div>
+                        <div class="ibox-content border-left-right">
+                            <div class="circle img-responsive">
+                              <span class="initials"></span>
+                            </div>
+                        </div>
+                        <div class="ibox-content profile-content">
+                            <h4><strong>{{ object.name }}</strong></h4>
+                            <p>{{ object.title }}</p>
+                            <h5>
+                                Work information
+                            </h5>
+                            {% if object.phone_number %}<p>Phone number: {{ object.phone_number }}</p>{% endif %}
+                            <p>Gross income: UGX {{ object.gross_income|floatformat:3|intcomma }}</p>
+
+                            <div class="user-button">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-envelope"></i> Add to active payroll</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Activities</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div>
+                            <div class="feed-activity-list">
+                                No payslips yet
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            let fullname = '{{ object.name }}';
+            let nameList = fullname.split(' ');
+
+            let initials = '';
+            nameList.forEach(function(element) {
+              initials += element[0];
+
+            });
+            $('.initials').text(initials);
+
+        })
+
+    </script>
 {% endblock %}
