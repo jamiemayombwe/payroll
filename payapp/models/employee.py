@@ -22,8 +22,8 @@ class Employee(models.Model):
     gross_income = models.DecimalField(decimal_places=3, max_digits=13)
     tin = models.CharField(max_length=20, verbose_name='TIN', blank=True, null=True)
     nssf_number = models.CharField(max_length=20, verbose_name='NSSF Number', blank=True, null=True)
-    paye_type = models.CharField(max_length=100, verbose_name='Select PAYE method for this employee', choices=PAYE_METHODS, blank=False, null=False)
-    local_service_tax_amount = models.DecimalField(decimal_places=3, max_digits=13, verbose_name='Select Local Service Tax method for this employee', choices=LST_AMOUNTS, blank=False, null=False)
+    paye_type = models.CharField(max_length=100, choices=PAYE_METHODS, blank=False, null=False)
+    local_service_tax_amount = models.DecimalField(decimal_places=3, max_digits=13, choices=LST_AMOUNTS, blank=False, null=False)
     active = models.BooleanField(default=True)
     created_date = models.DateTimeField(auto_now_add=True, editable=False)
 
