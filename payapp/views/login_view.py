@@ -15,27 +15,13 @@ class Login(LoginView):
 
     def form_valid(self, form):
         login(self.request, form.get_user())
-        return HttpResponseRedirect('/payapp/')
+        return HttpResponseRedirect('/')
 
     def form_invalid(self, form):
         return render(self.request, self.template_name, {'form': form})
-
-    # def post(self, request, *args, **kwargs):
-    #     username = request.POST['username']
-    #     password = request.POST['password']
-    #     user = authenticate(username=username, password=password)
-    #
-    #     if user is not None:
-    #         if user.is_active:
-    #             login(request, user)
-    #             return HttpResponseRedirect(self.success_url)
-    #         else:
-    #             return HttpResponse('Your account is inactive')
-    #     else:
-    #         return HttpResponse('login/')
 
 
 class Logout(RedirectView):
     def get(self, request, *args, **kwargs):
         logout(request)
-        return HttpResponseRedirect('/payapp/login/')
+        return HttpResponseRedirect('/login/')

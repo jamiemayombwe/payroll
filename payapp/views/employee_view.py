@@ -34,7 +34,7 @@ class EmployeeEditView(UpdateView):
 
     def form_valid(self, form):
         form.save()
-        return HttpResponseRedirect('/payapp/employees/')
+        return HttpResponseRedirect('/employees/')
 
     def form_invalid(self, form):
         return render(self.request, self.template_name, {'form': form})
@@ -54,7 +54,7 @@ class EmployeeCreateView(CreateView):
 
     def form_valid(self, form):
         form.save()
-        return HttpResponseRedirect('/payapp/employees/')
+        return HttpResponseRedirect('/employees/')
 
     def form_invalid(self, form):
         return render(self.request, self.template_name, {'form': form})
