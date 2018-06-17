@@ -26,3 +26,7 @@
   position: relative;
   top: calc(var(--avatar-size) / 4); /* 25% of parent */
 }
+
+.form-p{
+    margin: 0 0 12px 0;
+}

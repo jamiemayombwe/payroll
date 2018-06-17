@@ -9,19 +9,23 @@ PAYROLL_STATUS = (
 
 
 class PayRoll(models.Model):
-    start_date = models.DateTimeField(blank=False, null=False)
-    end_date = models.DateTimeField(blank=False, null=False)
-    pay_date = models.DateTimeField(blank=False, null=False)
+    start_date = models.DateField(blank=False, null=False)
+    end_date = models.DateField(blank=False, null=False)
+    pay_date = models.DateField(blank=False, null=False)
     total_amount = models.DecimalField(decimal_places=3, max_digits=15, blank=False, null=False)
     status = models.IntegerField(choices=PAYROLL_STATUS, null=False)
-    created_by = models.PositiveIntegerField(null=False)
-    authorized_by = models.PositiveIntegerField(null=True)
-    paid_by = models.PositiveIntegerField(null=True)
+    created_by = models.PositiveIntegerField(blank=False, null=False)
+    authorized_by = models.PositiveIntegerField(blank=True, null=True)
+    paid_by = models.PositiveIntegerField(blank=True, null=True)
+    created_date = models.DateTimeField(auto_now_add=True, editable=False)
+
+    def __str__(self):
+        return 'From: %s To: %s' % (self.start_date, self.end_date)
 
 
 class Deduction(models.Model):
     amount = models.DecimalField(decimal_places=3, max_digits=13, blank=False, null=False)
-    created_by = models.PositiveIntegerField(null=False)
+    created_by = models.PositiveIntegerField(blank=True, null=False)
     created_date = models.DateTimeField(auto_now_add=True, editable=False)
 
 
@@ -38,7 +42,8 @@ class PayRollItem(models.Model):
     annual_local_service_tax_to_be_paid = models.DecimalField(decimal_places=3, max_digits=13, blank=False, null=False)
     net_pay = models.DecimalField(decimal_places=3, max_digits=13, blank=False, null=False)
     status = models.IntegerField(choices=PAYROLL_STATUS, null=False)
-    created_by = models.PositiveIntegerField(null=False)
+    created_by = models.PositiveIntegerField(blank=False, null=False)
+    created_date = models.DateTimeField(auto_now_add=True, editable=False)
 
 
 class PaySlip(models.Model):

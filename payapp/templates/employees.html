@@ -2,9 +2,9 @@
 {% load static %}
 {% load humanize %}
 
-    {% block extra_css %}
-        <link href="{% static 'css/datatables/datatables.min.css' %}" rel="stylesheet">
-    {% endblock %}
+{% block extra_css %}
+    <link href="{% static 'css/datatables/datatables.min.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
 
@@ -98,8 +98,8 @@
                 buttons: [
                     { extend: 'copy' },
                     { extend: 'csv' },
-                    { extend: 'excel', title: 'ExampleFile' },
-                    { extend: 'pdf', title: 'ExampleFile' },
+                    { extend: 'excel', title: 'NsamiziEmployees' },
+                    { extend: 'pdf', title: 'NsamiziEmployees' },
 
                     {
                         extend: 'print',

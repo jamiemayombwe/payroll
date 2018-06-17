@@ -13,7 +13,7 @@ class EmployeeForm(forms.ModelForm):
     nssf_number = forms.CharField(required=False, label='NSSF number', widget=forms.TextInput(attrs={'class': "form-control"}))
     paye_type = forms.ChoiceField(required=True, label='Select PAYE method for this employee', choices=Employee.PAYE_METHODS, widget=forms.Select(attrs={'class': "form-control m-b"}))
     local_service_tax_amount = forms.ChoiceField(required=True, label='Select Local Service Tax amount for this employee', choices=Employee.LST_AMOUNTS, widget=forms.Select(attrs={'class': "form-control m-b"}))
-    active = forms.BooleanField(initial=True, required=False)
+    active = forms.BooleanField(initial=True, required=False, widget=forms.CheckboxInput(attrs={'class': "i-checks"}))
 
     class Meta:
         model = Employee

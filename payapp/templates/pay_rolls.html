@@ -2,9 +2,9 @@
 {% load static %}
 {% load humanize %}
 
-    {% block extra_css %}
-        <link href="{% static 'css/datatables/datatables.min.css' %}" rel="stylesheet">
-    {% endblock %}
+{% block extra_css %}
+    <link href="{% static 'css/datatables/datatables.min.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
 
@@ -15,7 +15,7 @@
                 <div class="ibox-title">
                     <h5>Payrolls</h5>
                     <div class="ibox-tools">
-                        <a class="btn btn-sm btn-success" href="#" ><span class="glyphicon glyphicon-plus"></span> New Payroll</a>
+                        <a class="btn btn-sm btn-success" href="{% url 'create_payroll' %}" ><span class="glyphicon glyphicon-plus"></span> New Payroll</a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -31,49 +31,46 @@
                 <div class="ibox-title">
                     <h5>Payrolls</h5>
                     <div class="ibox-tools">
-                        <a class="btn btn-sm btn-success" href="#" ><span class="glyphicon glyphicon-plus"></span> New Payroll</a>
+                        <a class="btn btn-sm btn-success" href="{% url 'create_payroll' %}" ><span class="glyphicon glyphicon-plus"></span> New Payroll</a>
                     </div>
                 </div>
                 <div class="ibox-content">
 
-                    <table class="table table-striped table-bordered table-hover employees-table">
+                    <table class="table table-striped table-bordered table-hover payrolls-table">
                         <thead>
                             <tr>
-                                <th>From date</th>
-                                <th>To date</th>
+                                <th>Start date</th>
+                                <th>End date</th>
                                 <th>Pay date</th>
                                 <th>Total amount</th>
                                 <th>Status</th>
-                                <th></th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for pay_roll in object_list %}
                                 <tr class="clickable-row" data-href="#">
-                                    <td>{{ pay_roll.from_date }}</td>
-                                    <td>{{ pay_roll.to_date }}</td>
-                                    <td>{{ pay_roll.pay_date }}</td>
-                                    <td>{{ pay_roll.gross_income|floatformat:3|intcomma }}</td>
-                                    <td>{{ pay_roll.status }}</td>
-{#                                    <td>#}
-{#                                        {% if employee.active %}<span class="glyphicon glyphicon-ok-sign text-navy" ></span>#}
-{#                                        {% else %}<span class="glyphicon glyphicon-remove-sign text-danger" ></span>#}
-{#                                        {% endif %}#}
-{#                                    </td>#}
+                                    <td>{{ pay_roll.start_date|date:"d M Y" }}</td>
+                                    <td>{{ pay_roll.end_date|date:"d M Y" }}</td>
+                                    <td>{{ pay_roll.pay_date|date:"d M Y" }}</td>
+                                    <td>{{ pay_roll.total_amount|floatformat:3|intcomma }}</td>
+                                    <td>
+                                        {% if pay_roll.status == 1 %}<span class="badge badge-warning">{{ pay_roll.get_status_display }}</span>
+                                        {% elif pay_roll.status == 2 %}<span class="badge badge-success">{{ pay_roll.get_status_display }}</span>
+                                        {% elif pay_roll.status == 3 %}<span class="badge badge-primary">{{ pay_roll.get_status_display }}</span>
+                                        {% endif %}
+                                    </td>
                                     <td><a href="#"><span class="glyphicon glyphicon-pencil text-success" ></span></a></td>
-                                    <td></td>
                                 </tr>
                             {% endfor %}
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>From date</th>
-                                <th>To date</th>
+                                <th>Start date</th>
+                                <th>End date</th>
                                 <th>Pay date</th>
                                 <th>Total amount</th>
                                 <th>Status</th>
-                                <th></th>
                                 <th></th>
                             </tr>
                         </tfoot>
@@ -86,7 +83,7 @@
     {% endif %}
 
     {# div to hold the form dialog #}
-    <div class="modal inmodal" id="employeeFormModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+    <div class="modal inmodal" id="payrollFormModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
 {% endblock %}
 
 {% block extra_js %}
@@ -95,14 +92,14 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            $('.employees-table').DataTable({
+            $('.payrolls-table').DataTable({
                 pageLength: 25,
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
                     { extend: 'copy' },
                     { extend: 'csv' },
-                    { extend: 'excel', title: 'ExampleFile' },
-                    { extend: 'pdf', title: 'ExampleFile' },
+                    { extend: 'excel', title: 'NsamiziPayrolls' },
+                    { extend: 'pdf', title: 'NsamiziPayrolls' },
 
                     {
                         extend: 'print',

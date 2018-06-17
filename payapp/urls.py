@@ -2,7 +2,7 @@ from django.urls import path
 
 from payapp.views.employee_view import EmployeeListView, EmployeeEditView, EmployeeCreateView, EmployeeDetailView
 from payapp.views.login_view import Login, Logout
-from payapp.views.pay_roll_view import PayRollListView
+from payapp.views.pay_roll_view import PayRollListView, PayRollCreateView
 
 urlpatterns = [
     # path('', views.index, name='index'),
@@ -10,6 +10,7 @@ urlpatterns = [
     path('logout/', Logout.as_view(), name='logout'),
 
     path('', PayRollListView.as_view(), name='payrolls'),
+    path('create_payroll/', PayRollCreateView.as_view(), name='create_payroll'),
 
     path('employees/', EmployeeListView.as_view(), name='employees'),
     path('edit_employee/<int:pk>/', EmployeeEditView.as_view(), name='edit_employee'),
