@@ -11,19 +11,28 @@
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
     <link href="{% static 'css/animate.css' %}" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/app.css' %}" rel="stylesheet">
 
 </head>
 
 <body class="gray-bg">
 
+    <div class="logo-container">
+        <div class="row ">
+            <div class="col-md-3">
+                <img src="{% static 'images/nsamizi_logo.png' %}" class="app-logo" >
+            </div>
+            <div class="col-md-3">
+                <img src="{% static 'images/ug_coa.png' %}" class="app-logo" >
+            </div>
+            <div class="col-md-3">
+                <img src="{% static 'images/unhcr_logo.jpg' %}" class="app-logo" >
+            </div>
+        </div>
+    </div>
     <div class="middle-box text-center loginscreen  animated fadeInDown">
         <div>
-            <div>
-
-                <h1 class="logo-name">NI</h1>
-
-            </div>
-            <h3>Nsamizi Institute Payroll Application</h3>
+            <h3>Nsamizi UNHCR Project Payroll</h3>
             {% if form.errors %}
                 {% for field in form %}
                     {% for error in field.errors %}
