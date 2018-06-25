@@ -11,6 +11,7 @@ urlpatterns = [
 
     path('', PayRollListView.as_view(), name='payrolls'),
     path('create_payroll/', PayRollCreateView.as_view(), name='create_payroll'),
+    # path('edit_payroll/<int:pk>', PayRollEditView.as_view(), name='edit_payroll'),
 
     path('employees/', EmployeeListView.as_view(), name='employees'),
     path('edit_employee/<int:pk>/', EmployeeEditView.as_view(), name='edit_employee'),

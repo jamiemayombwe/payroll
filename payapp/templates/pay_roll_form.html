@@ -16,38 +16,46 @@
                 <div class="ibox-content">
                     <form class="form-horizontal" role="form" method="post"
                           {% if view.title == 'Create payroll' %}
-                            action="{% url 'create_employee' %}"
+                            action="{% url 'create_payroll' %}"
 {#                              {% else %}#}
-{#                                  action="{% url 'edit_employee' employee.id %}"#}
+{#                                  action="{% url 'edit_payroll' employee.id %}"#}
                           {% endif %}>
 
                         {% csrf_token %}
-{#                            {{ form.as_p}}#}
                         <div class="form-p" id="data_start_date">
                             <label for="id_start_date">Start date:</label>
                             <div class="input-group date">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                <input type="text" name="start_date" class="form-control" id="id_start_date">
+                                {{ form.start_date }}
                             </div>
+                            {% for error in form.start_date.errors %}
+                                <strong class="text-danger">{{ error|escape }}</strong>
+                            {% endfor %}
                         </div>
                         <div class="form-p" id="data_end_date">
                             <label for="id_end_date">End date:</label>
                             <div class="input-group date">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                <input type="text" name="end_date" class="form-control" id="id_end_date">
+                                {{ form.end_date }}
                             </div>
+                            {% for error in form.end_date.errors %}
+                                <strong class="text-danger">{{ error|escape }}</strong>
+                            {% endfor %}
                         </div>
                         <div class="form-p" id="data_pay_date">
                             <label for="id_pay_date">Pay date:</label>
                             <div class="input-group date">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                <input type="text" name="pay_date" class="form-control" id="id_pay_date">
+                                {{ form.pay_date }}
                             </div>
+                            {% for error in form.pay_date.errors %}
+                                <strong class="text-danger">{{ error|escape }}</strong>
+                            {% endfor %}
                         </div>
-                        <p class="form-p">
+                        <div class="form-p">
                             <label for="id_add_all_active_employees">Add all active employees to this payroll:</label>
-                            <input type="checkbox" name="add_all_active_employees" class="i-checks" id="id_add_all_active_employees" checked>
-                        </p>
+                            {{ form.add_all_active_employees }}
+                        </div>
 
                         <p><button class="btn btn-sm btn-primary" type="submit">Save</button></p>
                     </form>
@@ -70,7 +78,6 @@
             });
 
             $('#data_start_date .input-group.date').datepicker({
-                format: 'dd M yyyy',
                 todayBtn: "linked",
                 todayHighlight: true,
                 keyboardNavigation: false,
@@ -80,7 +87,6 @@
             });
 
         $('#data_end_date .input-group.date').datepicker({
-                format: 'dd M yyyy',
                 todayBtn: "linked",
                 todayHighlight: true,
                 keyboardNavigation: false,
@@ -90,7 +96,6 @@
             });
 
         $('#data_pay_date .input-group.date').datepicker({
-                format: 'dd M yyyy',
                 todayBtn: "linked",
                 todayHighlight: true,
                 keyboardNavigation: false,
