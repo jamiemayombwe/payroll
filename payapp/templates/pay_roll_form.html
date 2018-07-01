@@ -52,6 +52,13 @@
                                 <strong class="text-danger">{{ error|escape }}</strong>
                             {% endfor %}
                         </div>
+                        <div class="form-p" id="data_annual_local_service_tax_to_be_paid">
+                            <label for="id_annual_local_service_tax_to_be_paid">Local Service Tax amount</label>
+                            {{ form.annual_local_service_tax_to_be_paid }}
+                            {% for error in form.annual_local_service_tax_to_be_paid.errors %}
+                                <strong class="text-danger">{{ error|escape }}</strong>
+                            {% endfor %}
+                        </div>
                         <div class="form-p">
                             <label for="id_add_all_active_employees">Add all active employees to this payroll:</label>
                             {{ form.add_all_active_employees }}

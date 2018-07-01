@@ -2,10 +2,13 @@ from django.db import models
 
 
 class Employee(models.Model):
+    PAYE_ONE = 'PAYE_ONE'
+    PAYE_TWO = 'PAYE_TWO'
     PAYE_METHODS = (
-        ('PAYE_ONE', '0.3 * Taxable Amount'),
-        ('PAYE_TWO', '25,000 + [0.3 * (Taxable Amount - 410,000)]')
+        (PAYE_ONE, '0.3 * Taxable Amount'),
+        (PAYE_TWO, '25,000 + [0.3 * (Taxable Amount - 410,000)]')
     )
+
     LST_ONE = 100000.000
     LST_TWO = 80000.000
     LST_THREE = 70000.000
