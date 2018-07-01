@@ -15,7 +15,7 @@
                 <div class="ibox-title">
                     <h5>Payrolls</h5>
                     <div class="ibox-tools">
-                        <a class="btn btn-sm btn-success" href="#" ><span class="glyphicon glyphicon-plus"></span> New Payroll</a>
+                        <a class="btn btn-sm btn-success" href="{% url 'create_payroll' %}" ><span class="glyphicon glyphicon-plus"></span> New Payroll</a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -31,7 +31,7 @@
                 <div class="ibox-title">
                     <h5>Payrolls</h5>
                     <div class="ibox-tools">
-                        <a class="btn btn-sm btn-success" href="#" ><span class="glyphicon glyphicon-plus"></span> New Payroll</a>
+                        <a class="btn btn-sm btn-success" href="{% url 'create_payroll' %}" ><span class="glyphicon glyphicon-plus"></span> New Payroll</a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -49,10 +49,11 @@
                         </thead>
                         <tbody>
                             {% for pay_roll in object_list %}
-                                <tr class="clickable-row" data-href="#">
+                                <tr class="clickable-row" data-href="{% url 'payroll_items' pay_roll.id %}" >
                                     <td>{{ pay_roll.start_date|date:"d M Y" }}</td>
                                     <td>{{ pay_roll.end_date|date:"d M Y" }}</td>
                                     <td>{{ pay_roll.pay_date|date:"d M Y" }}</td>
+{#                                    <td>{% item.net_pay for item in  pay_roll.payrollitem_set.all %}</td>#}
                                     <td>{{ pay_roll.total_amount|floatformat:3|intcomma }}</td>
                                     <td>
                                         {% if pay_roll.status == 1 %}<span class="badge badge-warning">{{ pay_roll.get_status_display }}</span>
@@ -96,13 +97,8 @@
                 pageLength: 25,
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
-                    { extend: 'copy' },
-                    { extend: 'csv' },
                     { extend: 'excel', title: 'NsamiziPayrolls' },
-                    { extend: 'pdf', title: 'NsamiziPayrolls' },
-
-                    {
-                        extend: 'print',
+                    { extend: 'print',
                         customize: function (win) {
                             $(win.document.body).addClass('white-bg');
                             $(win.document.body).css('font-size', '10px');
