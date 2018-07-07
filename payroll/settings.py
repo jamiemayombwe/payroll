@@ -181,7 +181,7 @@ LOGGING = {
             'when': 'midnight',
             'filters': ['require_debug_true'],
             'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': 'logs/ErrorLoggers.log',
+            'filename': 'payroll.log',
             'formatter': 'verbose'
         },
         'mail_admins': {
