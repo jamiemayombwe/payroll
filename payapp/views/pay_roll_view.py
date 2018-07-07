@@ -1,6 +1,3 @@
-import datetime
-import decimal
-
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -8,8 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView
 
 from payapp.forms.pay_roll_form import PayRollForm
-from payapp.models.employee import Employee
-from payapp.models.pay_roll import PayRoll, CREATED, Deduction, PayRollItem
+from payapp.models.pay_roll import PayRoll, PayRollItem
 from payapp.services.pay_roll_service import PayRollService
 
 
@@ -60,7 +56,7 @@ class PayRollItemsListView(ListView):
 
     def status(self):
         self.pay_roll = get_object_or_404(PayRoll, id=self.kwargs['pk'])
-        return  self.pay_roll.status
+        return self.pay_roll.status
 
     def active(self):
         return 'payrolls_active'
