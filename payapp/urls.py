@@ -1,11 +1,12 @@
 from django.urls import path
 
+from payapp.views import views
 from payapp.views.employee_view import EmployeeListView, EmployeeEditView, EmployeeCreateView, EmployeeDetailView
 from payapp.views.login_view import Login, Logout
 from payapp.views.pay_roll_view import PayRollListView, PayRollCreateView, PayRollItemsListView
 
 urlpatterns = [
-    # path('', views.index, name='index'),
+    path('index/', views.index, name='index'),
     path('login/', Login.as_view(), name='login'),
     path('logout/', Logout.as_view(), name='logout'),
 
