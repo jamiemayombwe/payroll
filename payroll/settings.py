@@ -179,6 +179,7 @@ LOGGING = {
         'file': {
             'level': 'ERROR',
             'when': 'midnight',
+            'filters': ['require_debug_true'],
             'class': 'logging.handlers.TimedRotatingFileHandler',
             'filename': 'logs/ErrorLoggers.log',
             'formatter': 'verbose'
