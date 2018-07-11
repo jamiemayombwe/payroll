@@ -52,6 +52,22 @@ class EmployeeEditView(UpdateView):
     def title(self):
         return 'Edit employee'
 
+    def get(self, request, *args, **kwargs):
+        employee = Employee.objects.get(id=kwargs['pk'])
+        initial = {'name': employee.name, 'title': employee.title, 'email': employee.email,
+                   'phone_number': employee.phone_number, 'gross_income': employee.gross_income, 'tin': employee.tin,
+                   'nssf_number': employee.nssf_number, 'paye_type': employee.paye_type,
+                   'local_service_tax_amount': employee.local_service_tax_amount, 'active': employee.active}
+        if employee.local_service_tax_amount == 100000.000:
+            initial['local_service_tax_amount'] = Employee.LST_AMOUNTS[0]
+        if employee.local_service_tax_amount == 80000.000:
+            initial['local_service_tax_amount'] = Employee.LST_AMOUNTS[1]
+        if employee.local_service_tax_amount == 70000.000:
+            initial['local_service_tax_amount'] = Employee.LST_AMOUNTS[2]
+        form = self.form_class(initial=initial)
+
+        return render(request, self.template_name, {'form': form})
+
     def form_valid(self, form):
         form.save()
         return HttpResponseRedirect('/employees/')

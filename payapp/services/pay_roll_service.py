@@ -28,18 +28,18 @@ class PayRollService(object):
             payroll_item = PayRollItem()
             payroll_item.pay_roll = pay_roll
             payroll_item.employee = employee
-            payroll_item.taxable_amount = employee.gross_income / decimal.Decimal(1.1)
+            payroll_item.taxable_amount = employee.gross_income / decimal.Decimal(1.10)
             payroll_item.nssf_contribution = payroll_item.taxable_amount * decimal.Decimal(0.15)
-            if employee.paye_type == Employee.PAYE_ONE:
-                payroll_item.pay_as_you_earn = payroll_item.taxable_amount * decimal.Decimal(0.3)
-            elif employee.paye_type == Employee.PAYE_TWO:
-                payroll_item.pay_as_you_earn = 25000 + ((payroll_item.taxable_amount - 410000) * decimal.Decimal(0.3))
+            if employee.paye_type == Employee.paye_method_one:
+                payroll_item.pay_as_you_earn = payroll_item.taxable_amount * decimal.Decimal(0.30)
+            elif employee.paye_type == Employee.paye_method_two:
+                payroll_item.pay_as_you_earn = 25000 + ((payroll_item.taxable_amount - 410000) * decimal.Decimal(0.30))
             payroll_item.local_service_taxable_amount = employee.gross_income - payroll_item.nssf_contribution - payroll_item.pay_as_you_earn
 
             if local_service_tax_amount is not None and local_service_tax_amount > 0:
                 payroll_item.annual_local_service_tax_to_be_paid = decimal.Decimal(local_service_tax_amount)
             else:
-                payroll_item.annual_local_service_tax_to_be_paid = decimal.Decimal(0.0)
+                payroll_item.annual_local_service_tax_to_be_paid = decimal.Decimal(0.00)
             payroll_item.status = CREATED
             payroll_item.created_by = self.request.user.id
 

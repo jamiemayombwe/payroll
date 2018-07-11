@@ -2,20 +2,20 @@ from django.db import models
 
 
 class Employee(models.Model):
-    PAYE_ONE = 'PAYE_ONE'
-    PAYE_TWO = 'PAYE_TWO'
+    paye_method_one = 'paye_method_one'
+    paye_method_two = 'paye_method_two'
     PAYE_METHODS = (
-        (PAYE_ONE, '0.3 * Taxable Amount'),
-        (PAYE_TWO, '25,000 + [0.3 * (Taxable Amount - 410,000)]')
+        (paye_method_one, '0.3 * Taxable Amount'),
+        (paye_method_two, '25,000 + [0.3 * (Taxable Amount - 410,000)]')
     )
 
-    LST_ONE = 100000.000
-    LST_TWO = 80000.000
-    LST_THREE = 70000.000
+    lst_one = 100000.000
+    lst_two = 80000.000
+    lst_three = 70000.000
     LST_AMOUNTS = (
-        (LST_ONE, 'UGX 100,000'),
-        (LST_TWO, 'UGX 80,000'),
-        (LST_THREE, 'UGX 70,000')
+        (lst_one, 'UGX 100,000'),
+        (lst_two, 'UGX 80,000'),
+        (lst_three, 'UGX 70,000')
     )
 
     name = models.CharField(max_length=100, blank=False, null=False)
