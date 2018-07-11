@@ -21,26 +21,6 @@ class EmployeeListView(ListView):
 
 
 @method_decorator(login_required, name='dispatch')
-class EmployeeEditView(UpdateView):
-    template_name = 'employee_form.html'
-    model = Employee
-    form_class = EmployeeForm
-
-    def active(self):
-        return 'employees_active'
-
-    def title(self):
-        return 'Edit employee'
-
-    def form_valid(self, form):
-        form.save()
-        return HttpResponseRedirect('/employees/')
-
-    def form_invalid(self, form):
-        return render(self.request, self.template_name, {'form': form})
-
-
-@method_decorator(login_required, name='dispatch')
 class EmployeeCreateView(CreateView):
     template_name = 'employee_form.html'
     model = Employee
@@ -51,6 +31,26 @@ class EmployeeCreateView(CreateView):
 
     def title(self):
         return 'Create employee'
+
+    def form_valid(self, form):
+        form.save()
+        return HttpResponseRedirect('/employees/')
+
+    def form_invalid(self, form):
+        return render(self.request, self.template_name, {'form': form})
+
+
+@method_decorator(login_required, name='dispatch')
+class EmployeeEditView(UpdateView):
+    template_name = 'employee_form.html'
+    model = Employee
+    form_class = EmployeeForm
+
+    def active(self):
+        return 'employees_active'
+
+    def title(self):
+        return 'Edit employee'
 
     def form_valid(self, form):
         form.save()

@@ -16,7 +16,7 @@ urlpatterns = [
     # path('edit_payroll/<int:pk>', PayRollEditView.as_view(), name='edit_payroll'),
 
     path('employees/', EmployeeListView.as_view(), name='employees'),
-    path('edit_employee/<int:pk>/', EmployeeEditView.as_view(), name='edit_employee'),
     path('create_employee/', EmployeeCreateView.as_view(), name='create_employee'),
+    path('edit_employee/<int:pk>/', EmployeeEditView.as_view(), name='edit_employee'),
     path('employee_detail/<int:pk>/', EmployeeDetailView.as_view(), name='employee_detail'),
 ]

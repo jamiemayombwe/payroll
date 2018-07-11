@@ -16,7 +16,7 @@
                         <form class="form-horizontal" role="form" method="post"
                               {% if view.title == 'Create employee' %}
                                 action="{% url 'create_employee' %}"
-                              {% else %}
+                              {% elif view.title == 'Edit employee' %}
                                   action="{% url 'edit_employee' employee.id %}"
                               {% endif %}>
 

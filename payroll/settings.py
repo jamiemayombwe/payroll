@@ -177,10 +177,9 @@ LOGGING = {
     },
     'handlers': {
         'file': {
-            'level': 'ERROR',
-            'when': 'midnight',
+            'level': 'DEBUG',
             'filters': ['require_debug_true'],
-            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'class': 'logging.FileHandler',
             'filename': 'payroll.log',
             'formatter': 'verbose'
         },
