@@ -66,7 +66,8 @@ class EmployeeEditView(UpdateView):
             initial['local_service_tax_amount'] = Employee.LST_AMOUNTS[2]
         form = self.form_class(initial=initial)
 
-        return render(request, self.template_name, {'form': form})
+        # return super().get(request, *args, **kwargs)
+        return render(request, self.template_name, {'form': form, 'active': self.active(), 'title': self.title()})
 
     def form_valid(self, form):
         form.save()
