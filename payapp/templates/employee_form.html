@@ -17,7 +17,7 @@
                               {% if view.title == 'Create employee' %}
                                 action="{% url 'create_employee' %}"
                               {% elif view.title == 'Edit employee' %}
-                                  action="{% url 'edit_employee' employee.id %}"
+                                action="{% url 'edit_employee' employee.id %}"
                               {% endif %}>
 
                             {% csrf_token %}

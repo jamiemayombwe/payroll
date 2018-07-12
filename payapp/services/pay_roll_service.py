@@ -1,8 +1,9 @@
 import datetime
 import decimal
 
+from payapp.models.deduction import Deduction
 from payapp.models.employee import Employee
-from payapp.models.pay_roll import PayRoll, CREATED, PayRollItem, Deduction
+from payapp.models.pay_roll import PayRoll, CREATED, PayRollItem
 
 
 class PayRollService(object):

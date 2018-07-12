@@ -53,7 +53,9 @@
                                     <td>{{ pay_roll.start_date|date:"d M Y" }}</td>
                                     <td>{{ pay_roll.end_date|date:"d M Y" }}</td>
                                     <td>{{ pay_roll.pay_date|date:"d M Y" }}</td>
-{#                                    <td>{% item.net_pay for item in  pay_roll.payrollitem_set.all %}</td>#}
+{#                                    {% for pay_roll_item in pay_roll.payrollitem_set.all %}#}
+{#                                        <td>{{ pay_roll_item.net_pay }}</td>#}
+{#                                    {% endfor %}#}
                                     <td>{{ pay_roll.total_amount|floatformat:3|intcomma }}</td>
                                     <td>
                                         {% if pay_roll.status == 1 %}<span class="badge badge-warning">{{ pay_roll.get_status_display }}</span>
