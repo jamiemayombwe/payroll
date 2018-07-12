@@ -40,5 +40,5 @@ class PayRollItem(models.Model):
     created_date = models.DateTimeField(auto_now_add=True, editable=False)
 
     def __str__(self):
-        return '%s net pay: %s' % (self.employee.name, self.net_pay)
+        return '%s net pay: %s, payroll: %s' % (self.employee.name, self.net_pay, self.pay_roll)
 

@@ -63,7 +63,9 @@
                                         {% elif pay_roll.status == 3 %}<span class="badge badge-primary">{{ pay_roll.get_status_display }}</span>
                                         {% endif %}
                                     </td>
-                                    <td><a href="#"><span class="glyphicon glyphicon-pencil text-success" ></span></a></td>
+                                    {% if pay_roll.status == 1 %}
+                                        <td><a href="#"><span class="glyphicon glyphicon-pencil text-success" ></span></a></td>
+                                    {% endif %}
                                 </tr>
                             {% endfor %}
                         </tbody>
