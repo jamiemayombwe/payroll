@@ -1,5 +1,6 @@
 from django import forms
 
+from payapp.models.employee import Employee
 from payapp.models.pay_roll import PayRoll
 
 
@@ -7,12 +8,10 @@ class PayRollForm(forms.ModelForm):
     start_date = forms.DateField(required=True, widget=forms.DateInput(attrs={'class': "form-control"}))
     end_date = forms.DateField(required=True, widget=forms.TextInput(attrs={'class': "form-control"}))
     pay_date = forms.DateField(required=True, widget=forms.TextInput(attrs={'class': "form-control"}))
-    annual_local_service_tax_to_be_paid = forms.DecimalField(required=False, label='Local Service Tax amount', widget=forms.TextInput(attrs={'class': "form-control"}))
-    add_all_active_employees = forms.BooleanField(initial=True, required=False, label='Add all active employees to this payroll', widget=forms.CheckboxInput(attrs={'class': "i-checks"}))
 
     class Meta:
         model = PayRoll
-        fields = ('start_date', 'end_date', 'pay_date', 'annual_local_service_tax_to_be_paid', 'add_all_active_employees')
+        fields = ('start_date', 'end_date', 'pay_date')
 
     def clean(self):
         start_date = self.cleaned_data['start_date']
