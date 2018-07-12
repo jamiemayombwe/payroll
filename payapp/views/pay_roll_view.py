@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView
 
 from payapp.forms.pay_roll_form import PayRollForm
 from payapp.models.pay_roll import PayRoll, PayRollItem
@@ -36,16 +36,39 @@ class PayRollCreateView(CreateView):
     def form_valid(self, form):
         pay_roll_service = PayRollService(self.request)
         pay_roll = pay_roll_service.create_pay_roll(form)
-
-        add_all_active_employees_to_pay_roll = form.cleaned_data['add_all_active_employees']
-        if add_all_active_employees_to_pay_roll:
-            local_service_tax_amount = form.cleaned_data['annual_local_service_tax_to_be_paid']
-            pay_roll_service.create_pay_roll_items(pay_roll, local_service_tax_amount)
+        pay_roll_service.create_pay_roll_items(pay_roll)
 
         return HttpResponseRedirect('/')
 
     def form_invalid(self, form):
         return render(self.request, self.template_name, {'form': form})
+
+
+class PayRollEditView(UpdateView):
+    template_name = 'pay_roll_form.html'
+    model = PayRoll
+    form_class = PayRollForm
+
+    @property
+    def active(self):
+        return 'payrolls_active'
+
+    @property
+    def title(self):
+        return 'Edit payroll'
+
+    def form_valid(self, form):
+        pay_roll_service = PayRollService(self.request)
+        pay_roll_service.update_pay_roll(form, self.kwargs['pk'])
+
+        pay_roll = PayRoll.objects.get(id=self.kwargs['pk'])
+        pay_roll_service.create_pay_roll_items(pay_roll)
+
+        return HttpResponseRedirect('/')
+
+    def form_invalid(self, form):
+        return render(self.request, self.template_name, {'form': form})
+
 
 
 @method_decorator(login_required, name='dispatch')
