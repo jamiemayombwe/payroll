@@ -14,6 +14,7 @@ class PayRollListView(ListView):
     template_name = 'pay_rolls.html'
     model = PayRoll
 
+    @property
     def active(self):
         return 'payrolls_active'
 
@@ -24,9 +25,11 @@ class PayRollCreateView(CreateView):
     model = PayRoll
     form_class = PayRollForm
 
+    @property
     def active(self):
         return 'payrolls_active'
 
+    @property
     def title(self):
         return 'Create payroll'
 
@@ -58,5 +61,6 @@ class PayRollItemsListView(ListView):
         self.pay_roll = get_object_or_404(PayRoll, id=self.kwargs['pk'])
         return self.pay_roll.status
 
+    @property
     def active(self):
         return 'payrolls_active'

@@ -16,6 +16,7 @@ class EmployeeListView(ListView):
     template_name = 'employees.html'
     model = Employee
 
+    @property
     def active(self):
         return 'employees_active'
 
@@ -26,9 +27,11 @@ class EmployeeCreateView(CreateView):
     model = Employee
     form_class = EmployeeForm
 
+    @property
     def active(self):
         return 'employees_active'
 
+    @property
     def title(self):
         return 'Create employee'
 
@@ -46,9 +49,11 @@ class EmployeeEditView(UpdateView):
     model = Employee
     form_class = EmployeeForm
 
+    @property
     def active(self):
         return 'employees_active'
 
+    @property
     def title(self):
         return 'Edit employee'
 
@@ -82,6 +87,7 @@ class EmployeeDetailView(DetailView):
     template_name = 'employee_detail.html'
     model = Employee
 
+    @property
     def active(self):
         return 'employees_active'
 
