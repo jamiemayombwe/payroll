@@ -4,6 +4,7 @@ import decimal
 from payapp.models.deduction import Deduction
 from payapp.models.employee import Employee
 from payapp.models.pay_roll import PayRoll, CREATED, PayRollItem
+from payapp.viewmodels.pay_roll_view_model import PayRollViewModel
 
 
 class PayRollService(object):
@@ -67,12 +68,27 @@ class PayRollService(object):
 
                 payroll_item.save()
 
-                payroll_items = PayRollItem.objects.filter(pay_roll=pay_roll)
+    def get_pay_roll_view_models(self):
+        pay_rolls = PayRoll.objects.all()
+        pay_roll_view_models = []
 
-                for item in payroll_items:
-                    pay_roll.total_amount = pay_roll.total_amount + item.net_pay
+        if len(pay_rolls) > 0:
+            for pay_roll in pay_rolls:
+                total_net_pay = decimal.Decimal(0.00)
+                pay_roll_items = pay_roll.payrollitem_set.all()
+                for pay_roll_item in pay_roll_items:
+                    total_net_pay = total_net_pay + pay_roll_item.net_pay
 
-                pay_roll.save()
+                pay_roll_view_model = PayRollViewModel(
+                    pay_roll.id,
+                    pay_roll.start_date,
+                    pay_roll.end_date,
+                    pay_roll.pay_date,
+                    pay_roll.status,
+                    pay_roll.get_status_display(),
+                    total_net_pay)
+                pay_roll_view_models.append(pay_roll_view_model)
+        return pay_roll_view_models
 
     def update_pay_roll(self, form, pay_roll_id):
         pay_roll = PayRoll.objects.get(id=pay_roll_id)

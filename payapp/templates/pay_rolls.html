@@ -42,29 +42,26 @@
                                 <th>Start date</th>
                                 <th>End date</th>
                                 <th>Pay date</th>
-                                <th>Total amount</th>
+                                <th>Total net pay</th>
                                 <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for pay_roll in object_list %}
-                                <tr class="clickable-row" data-href="{% url 'payroll_items' pay_roll.id %}" >
-                                    <td>{{ pay_roll.start_date|date:"d M Y" }}</td>
-                                    <td>{{ pay_roll.end_date|date:"d M Y" }}</td>
-                                    <td>{{ pay_roll.pay_date|date:"d M Y" }}</td>
-{#                                    {% for pay_roll_item in pay_roll.payrollitem_set.all %}#}
-{#                                        <td>{{ pay_roll_item.net_pay }}</td>#}
-{#                                    {% endfor %}#}
-                                    <td>{{ pay_roll.total_amount|floatformat:3|intcomma }}</td>
+                            {% for pay_roll_view_model in object_list %}
+                                <tr class="clickable-row" data-href="{% url 'payroll_items' pay_roll_view_model.id %}" >
+                                    <td>{{ pay_roll_view_model.start_date|date:"d M Y" }}</td>
+                                    <td>{{ pay_roll_view_model.end_date|date:"d M Y" }}</td>
+                                    <td>{{ pay_roll_view_model.pay_date|date:"d M Y" }}</td>
+                                    <td>{{ pay_roll_view_model.total_net_pay|floatformat:3|intcomma }}</td>
                                     <td>
-                                        {% if pay_roll.status == 1 %}<span class="badge badge-warning">{{ pay_roll.get_status_display }}</span>
-                                        {% elif pay_roll.status == 2 %}<span class="badge badge-success">{{ pay_roll.get_status_display }}</span>
-                                        {% elif pay_roll.status == 3 %}<span class="badge badge-primary">{{ pay_roll.get_status_display }}</span>
+                                        {% if pay_roll_view_model.status == 1 %}<span class="badge badge-warning">{{ pay_roll_view_model.status_display_name }}</span>
+                                        {% elif pay_roll_view_model.status == 2 %}<span class="badge badge-success">{{ pay_roll_view_model.status_display_name }}</span>
+                                        {% elif pay_roll_view_model.status == 3 %}<span class="badge badge-primary">{{ pay_roll_view_model.status_display_name }}</span>
                                         {% endif %}
                                     </td>
-                                    {% if pay_roll.status == 1 %}
-                                        <td><a href="#"><span class="glyphicon glyphicon-pencil text-success" ></span></a></td>
+                                    {% if pay_roll_view_model.status == 1 %}
+                                        <td><a href="{% url 'edit_payroll' pay_roll_view_model.id %}"><span class="glyphicon glyphicon-pencil text-success" ></span></a></td>
                                     {% endif %}
                                 </tr>
                             {% endfor %}
@@ -74,7 +71,7 @@
                                 <th>Start date</th>
                                 <th>End date</th>
                                 <th>Pay date</th>
-                                <th>Total amount</th>
+                                <th>Total net pay</th>
                                 <th>Status</th>
                                 <th></th>
                             </tr>

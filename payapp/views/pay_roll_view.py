@@ -18,6 +18,10 @@ class PayRollListView(ListView):
     def active(self):
         return 'payrolls_active'
 
+    def get_queryset(self):
+        pay_roll_service = PayRollService(self.request)
+        return pay_roll_service.get_pay_roll_view_models()
+
 
 @method_decorator(login_required, name='dispatch')
 class PayRollCreateView(CreateView):
@@ -44,6 +48,7 @@ class PayRollCreateView(CreateView):
         return render(self.request, self.template_name, {'form': form})
 
 
+@method_decorator(login_required, name='dispatch')
 class PayRollEditView(UpdateView):
     template_name = 'pay_roll_form.html'
     model = PayRoll
@@ -68,7 +73,6 @@ class PayRollEditView(UpdateView):
 
     def form_invalid(self, form):
         return render(self.request, self.template_name, {'form': form})
-
 
 
 @method_decorator(login_required, name='dispatch')
