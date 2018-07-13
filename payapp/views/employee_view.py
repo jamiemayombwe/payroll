@@ -49,11 +49,9 @@ class EmployeeEditView(UpdateView):
     model = Employee
     form_class = EmployeeForm
 
-    @property
     def active(self):
         return 'employees_active'
 
-    @property
     def title(self):
         return 'Edit employee'
 
@@ -71,7 +69,6 @@ class EmployeeEditView(UpdateView):
             initial['local_service_tax_amount'] = Employee.LST_AMOUNTS[2]
         form = self.form_class(initial=initial)
 
-        # return super().get(request, *args, **kwargs)
         return render(request, self.template_name, {'form': form, 'active': self.active(), 'title': self.title()})
 
     def form_valid(self, form):

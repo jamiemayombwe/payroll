@@ -17,8 +17,8 @@
                     <form class="form-horizontal" role="form" method="post"
                           {% if view.title == 'Create payroll' %}
                             action="{% url 'create_payroll' %}"
-{#                              {% else %}#}
-{#                                  action="{% url 'edit_payroll' employee.id %}"#}
+                          {% elif view.title == 'Edit payroll' %}
+                              action="{% url 'edit_payroll' payroll.id %}"
                           {% endif %}>
 
                         {% csrf_token %}
