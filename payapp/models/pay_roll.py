@@ -15,7 +15,6 @@ class PayRoll(models.Model):
     start_date = models.DateField(blank=False, null=False)
     end_date = models.DateField(blank=False, null=False)
     pay_date = models.DateField(blank=False, null=False)
-    total_amount = models.DecimalField(decimal_places=3, max_digits=15, blank=False, null=False)
     status = models.IntegerField(choices=PAYROLL_STATUS, null=False)
     created_by = models.PositiveIntegerField(blank=True, null=False)
     authorized_by = models.PositiveIntegerField(blank=True, null=True)
