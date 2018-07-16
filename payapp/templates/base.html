@@ -40,7 +40,7 @@
                     <div class="logo-element">
                         NUPP
                     </div>
-                <li {% if view.active == 'payrolls_active' %}class="active" {% endif %}>
+                <li {% if view.active == 'payrolls_active' or active == 'payrolls_active' %}class="active" {% endif %}>
                     <a href="{% url 'payrolls' %}"><i class="glyphicon glyphicon-list-alt"></i> <span class="nav-label">Payrolls</span> </a>
                 </li>
                 <li {% if view.active == 'employees_active' or active == 'employees_active' %}class="active" {% endif %}>

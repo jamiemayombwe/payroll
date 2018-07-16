@@ -29,11 +29,9 @@ class PayRollCreateView(CreateView):
     model = PayRoll
     form_class = PayRollForm
 
-    @property
     def active(self):
         return 'payrolls_active'
 
-    @property
     def title(self):
         return 'Create payroll'
 
@@ -45,7 +43,7 @@ class PayRollCreateView(CreateView):
         return HttpResponseRedirect('/')
 
     def form_invalid(self, form):
-        return render(self.request, self.template_name, {'form': form})
+        return render(self.request, self.template_name, {'form': form, 'active': 'payrolls_active', 'title': 'Create payroll'})
 
 
 @method_decorator(login_required, name='dispatch')
@@ -54,13 +52,25 @@ class PayRollEditView(UpdateView):
     model = PayRoll
     form_class = PayRollForm
 
-    @property
     def active(self):
         return 'payrolls_active'
 
-    @property
     def title(self):
         return 'Edit payroll'
+
+    def get(self, request, *args, **kwargs):
+        payroll = PayRoll.objects.get(id=kwargs['pk'])
+        date_format = "%m/%d/%Y"
+        initial = {
+            'id': payroll.id,
+            'start_date': payroll.start_date.strftime(date_format),
+            'end_date': payroll.end_date.strftime(date_format),
+            'pay_date': payroll.pay_date.strftime(date_format)
+        }
+
+        form = self.form_class(initial=initial)
+
+        return render(request, self.template_name, {'form': form, 'active': self.active(), 'title': self.title()})
 
     def form_valid(self, form):
         pay_roll_service = PayRollService(self.request)
@@ -72,7 +82,7 @@ class PayRollEditView(UpdateView):
         return HttpResponseRedirect('/')
 
     def form_invalid(self, form):
-        return render(self.request, self.template_name, {'form': form})
+        return render(self.request, self.template_name, {'form': form, 'active': 'payrolls_active', 'title': 'Edit payroll'})
 
 
 @method_decorator(login_required, name='dispatch')

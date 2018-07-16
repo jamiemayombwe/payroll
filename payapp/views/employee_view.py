@@ -76,7 +76,7 @@ class EmployeeEditView(UpdateView):
         return HttpResponseRedirect('/employees/')
 
     def form_invalid(self, form):
-        return render(self.request, self.template_name, {'form': form})
+        return render(self.request, self.template_name, {'form': form, 'active': self.active(), 'title': self.title()})
 
 
 @method_decorator(login_required, name='dispatch')
