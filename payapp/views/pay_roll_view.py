@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, UpdateView
 
 from payapp.forms.pay_roll_form import PayRollForm
-from payapp.models.pay_roll import PayRoll, PayRollItem
+from payapp.models.pay_roll import PayRoll, PayRollItem, AUTHORIZED, PAID
 from payapp.services.pay_roll_service import PayRollService
 
 
@@ -94,10 +94,37 @@ class PayRollItemsListView(ListView):
         self.pay_roll = get_object_or_404(PayRoll, id=self.kwargs['pk'])
         return PayRollItem.objects.filter(pay_roll=self.pay_roll)
 
-    def status(self):
+    def item_dict(self):
         self.pay_roll = get_object_or_404(PayRoll, id=self.kwargs['pk'])
-        return self.pay_roll.status
+        return {'status': self.pay_roll.status, 'id': self.pay_roll.id}
 
     @property
     def active(self):
         return 'payrolls_active'
+
+
+@login_required()
+def authorize_payroll(request, pk):
+    pay_roll = get_object_or_404(PayRoll, id=pk)
+
+    if pay_roll is not None:
+        pay_roll.status = AUTHORIZED
+        pay_roll.save()
+
+        return HttpResponseRedirect('/payroll_items/{0}'.format(pk))
+    else:
+        return HttpResponseRedirect('/')
+
+
+# @login_required()
+# def mark_payroll_as_paid(request, pk):
+#     pay_roll = get_object_or_404(PayRoll, id=pk)
+#
+#     if pay_roll is not None:
+#         pay_roll.status = PAID
+#         pay_roll.save()
+#
+#         return HttpResponseRedirect('/payroll_items/{0}'.format(pk))
+#     else:
+#         return HttpResponseRedirect('/')
+#

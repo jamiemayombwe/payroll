@@ -14,9 +14,9 @@
                 <div class="ibox-title">
                     <h5>Payroll Items</h5>
                     <div class="ibox-tools">
-                        {% if view.status == 1 %}
-                        <a class="btn btn-sm btn-primary" href="#" ><span class="glyphicon glyphicon-check"></span> Authorize Payroll</a>
-                        {% elif view.status == 2 %}
+                        {% if view.item_dict.status == 1 %}
+                            <a class="btn btn-sm btn-primary" href="{% url 'authorize_payroll' view.item_dict.id %}" ><span class="glyphicon glyphicon-check"></span> Authorize Payroll</a>
+                        {% elif view.item_dict.status == 2 %}
                             <a class="btn btn-sm btn-success" href="#" ><span class="glyphicon glyphicon-check"></span> Mark as Paid</a>
                         {% endif %}
                     </div>
@@ -51,7 +51,7 @@
                                     <td>{{ pay_roll_item.annual_local_service_tax_to_be_paid|floatformat:3|intcomma }}</td>
                                     <td>{{ pay_roll_item.net_pay|floatformat:3|intcomma }}</td>
 
-                                    <td><a href="#"><span class="glyphicon glyphicon-pencil text-success" ></span></a></td>
+                                    <td><a href="#"><span class="glyphicon glyphicon-trash text-danger" ></span></a></td>
                                 </tr>
                             {% endfor %}
                         </tbody>
