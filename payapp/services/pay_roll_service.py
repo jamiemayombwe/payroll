@@ -61,7 +61,7 @@ class PayRollService(object):
                             today_year - employee_deduction_year == 1 and employee_deduction_month - today_month == 1):
                         payroll_item.net_pay = payroll_item.local_service_taxable_amount - payroll_item.annual_local_service_tax_to_be_paid - employee_deduction.amount
 
-                        employee_deduction.status = Deduction.PAID
+                        employee_deduction.status = Deduction.PENDING
                         employee_deduction.save()
                 else:
                     payroll_item.net_pay = payroll_item.local_service_taxable_amount - payroll_item.annual_local_service_tax_to_be_paid

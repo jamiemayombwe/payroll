@@ -35,7 +35,10 @@
                                 <th>LST</th>
                                 <th>LST paid</th>
                                 <th>Net salary</th>
-                                <th></th>
+                                {% if view.item_dict.status == 1 %}
+                                    <th></th>
+                                {% endif %}
+
                             </tr>
                         </thead>
                         <tbody>
@@ -51,7 +54,9 @@
                                     <td>{{ pay_roll_item.annual_local_service_tax_to_be_paid|floatformat:3|intcomma }}</td>
                                     <td>{{ pay_roll_item.net_pay|floatformat:3|intcomma }}</td>
 
-                                    <td><a href="#"><span class="glyphicon glyphicon-trash text-danger" ></span></a></td>
+                                    {% if view.item_dict.status == 1 %}
+                                        <td><a href="#"><span class="glyphicon glyphicon-trash text-danger" ></span></a></td>
+                                    {% endif %}
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -66,7 +71,9 @@
                                 <th>LST</th>
                                 <th>LST paid</th>
                                 <th>Net salary</th>
-                                <th></th>
+                                {% if view.item_dict.status == 1 %}
+                                    <th></th>
+                                {% endif %}
                             </tr>
                         </tfoot>
                     </table>

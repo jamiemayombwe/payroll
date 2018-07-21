@@ -34,7 +34,7 @@ class PayRollItem(models.Model):
     local_service_taxable_amount = models.DecimalField(decimal_places=3, max_digits=13, blank=False, null=False)
     annual_local_service_tax_to_be_paid = models.DecimalField(decimal_places=3, max_digits=13, blank=False, null=False)
     net_pay = models.DecimalField(decimal_places=3, max_digits=13, blank=False, null=False)
-    status = models.IntegerField(choices=PAYROLL_STATUS, null=False)
+    active = models.BooleanField(default=True)
     created_by = models.PositiveIntegerField(blank=False, null=False)
     created_date = models.DateTimeField(auto_now_add=True, editable=False)
 

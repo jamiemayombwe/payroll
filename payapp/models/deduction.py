@@ -4,9 +4,10 @@ from payapp.models.employee import Employee
 
 
 class Deduction(models.Model):
-    PAID = 1
-    NOT_PAID = 2
-    DEDUCTION_STATUS = ((PAID, 'Paid'), (NOT_PAID, 'Not paid'))
+    NOT_PAID = 1
+    PENDING = 2
+    PAID = 3
+    DEDUCTION_STATUS = ((NOT_PAID, 'Not paid'), (PENDING, 'Pending'), (PAID, 'Paid'))
 
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     amount = models.DecimalField(decimal_places=3, max_digits=13, blank=False, null=False)
