@@ -4,7 +4,7 @@ from payapp.views import views
 from payapp.views.employee_view import EmployeeListView, EmployeeEditView, EmployeeCreateView, EmployeeDetailView
 from payapp.views.login_view import Login, Logout
 from payapp.views.pay_roll_view import PayRollListView, PayRollCreateView, PayRollItemsListView, PayRollEditView, \
-    authorize_payroll
+    authorize_payroll, PayRollDeleteView
 
 urlpatterns = [
     path('index/', views.index, name='index'),
@@ -14,6 +14,7 @@ urlpatterns = [
     path('', PayRollListView.as_view(), name='payrolls'),
     path('create_payroll', PayRollCreateView.as_view(), name='create_payroll'),
     path('edit_payroll/<int:pk>', PayRollEditView.as_view(), name='edit_payroll'),
+    path('delete_payroll/<int:pk>', PayRollDeleteView.as_view(), name='delete_payroll'),
 
     path('payroll_items/<int:pk>', PayRollItemsListView.as_view(), name='payroll_items'),
     path('authorize_payroll/<int:pk>', authorize_payroll, name='authorize_payroll'),

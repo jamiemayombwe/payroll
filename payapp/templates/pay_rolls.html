@@ -45,12 +45,13 @@
                                 <th>Total net pay</th>
                                 <th>Status</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for pay_roll_view_model in object_list %}
-                                <tr class="clickable-row" data-href="{% url 'payroll_items' pay_roll_view_model.id %}" >
-                                    <td>{{ pay_roll_view_model.start_date|date:"d M Y" }}</td>
+                                <tr>
+                                    <td class="clickable-row" data-href="{% url 'payroll_items' pay_roll_view_model.id %}">{{ pay_roll_view_model.start_date|date:"d M Y" }}</td>
                                     <td>{{ pay_roll_view_model.end_date|date:"d M Y" }}</td>
                                     <td>{{ pay_roll_view_model.pay_date|date:"d M Y" }}</td>
                                     <td>{{ pay_roll_view_model.total_net_pay|floatformat:3|intcomma }}</td>
@@ -62,7 +63,9 @@
                                     </td>
                                     {% if pay_roll_view_model.status == 1 %}
                                         <td><a href="{% url 'edit_payroll' pay_roll_view_model.id %}"><span class="glyphicon glyphicon-pencil text-success" ></span></a></td>
+                                        <td><a id="delete-payroll" data-delete="{% url 'delete_payroll' pay_roll_view_model.id %}" href="#"><span class="glyphicon glyphicon-trash text-danger" ></span></a></td>
                                     {% else %}
+                                        <td></td>
                                         <td></td>
                                     {% endif %}
                                 </tr>
@@ -76,6 +79,7 @@
                                 <th>Total net pay</th>
                                 <th>Status</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </tfoot>
                     </table>
@@ -87,7 +91,9 @@
     {% endif %}
 
     {# div to hold the form dialog #}
-    <div class="modal inmodal" id="payrollFormModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+    <div class="modal fade" id="modal-form-delete" tabindex="-1" role="dialog" aria-hidden="true">
+
+    </div>
 {% endblock %}
 
 {% block extra_js %}
@@ -118,6 +124,20 @@
             $(".clickable-row").click(function() {
                 window.location = $(this).data("href");
             });
+
+            var delete_url;
+            $("#delete-payroll").click(function(event) { // for each payroll delete
+                event.preventDefault(); // prevent navigation
+                delete_url = $(this).data("delete"); // get the delete form url
+                $("#modal-form-delete").load(delete_url, function() { // load the url into the modal
+                    $(this).modal('show'); // display the modal on url load
+                });
+                return false; // prevent the click propagation
+            });
+
+            
+
+
 
         });
 

@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from payapp.forms.pay_roll_form import PayRollForm
 from payapp.models.pay_roll import PayRoll, PayRollItem, AUTHORIZED, PAID
@@ -86,6 +86,13 @@ class PayRollEditView(UpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
+class PayRollDeleteView(DeleteView):
+    model = PayRoll
+    template_name = "confirm_delete.html"
+    success_url = "/"
+
+
+@method_decorator(login_required, name='dispatch')
 class PayRollItemsListView(ListView):
     template_name = 'pay_roll_items.html'
     model = PayRollItem
@@ -94,13 +101,46 @@ class PayRollItemsListView(ListView):
         self.pay_roll = get_object_or_404(PayRoll, id=self.kwargs['pk'])
         return PayRollItem.objects.filter(pay_roll=self.pay_roll)
 
-    def item_dict(self):
+    def payroll(self):
         self.pay_roll = get_object_or_404(PayRoll, id=self.kwargs['pk'])
-        return {'status': self.pay_roll.status, 'id': self.pay_roll.id}
+        return {'pay_roll': self.pay_roll}
 
     @property
     def active(self):
         return 'payrolls_active'
+
+
+# @method_decorator(login_required, name='dispatch')
+# class PayRollItemEditView(UpdateView):
+#     template_name = 'pay_roll_item_form.html'
+#     model = PayRollItem
+#     form_class = PayRollItemForm
+#
+#     def get(self, request, *args, **kwargs):
+#         payroll = PayRoll.objects.get(id=kwargs['pk'])
+#         date_format = "%m/%d/%Y"
+#         initial = {
+#             'id': payroll.id,
+#             'start_date': payroll.start_date.strftime(date_format),
+#             'end_date': payroll.end_date.strftime(date_format),
+#             'pay_date': payroll.pay_date.strftime(date_format)
+#         }
+#
+#         form = self.form_class(initial=initial)
+#
+#         return render(request, self.template_name, {'form': form, 'active': self.active(), 'title': self.title()})
+#
+#     def form_valid(self, form):
+#         pay_roll_service = PayRollService(self.request)
+#         pay_roll_service.update_pay_roll(form, self.kwargs['pk'])
+#
+#         pay_roll = PayRoll.objects.get(id=self.kwargs['pk'])
+#         pay_roll_service.create_pay_roll_items(pay_roll)
+#
+#         return HttpResponseRedirect('/')
+#
+#     def form_invalid(self, form):
+#         return render(self.request, self.template_name, {'form': form, 'active': 'payrolls_active', 'title': 'Edit payroll'})
 
 
 @login_required()
