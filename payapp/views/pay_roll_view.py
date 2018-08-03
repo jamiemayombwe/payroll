@@ -5,6 +5,9 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from payapp.forms.pay_roll_form import PayRollForm
+from payapp.forms.pay_roll_item_form import PayRollItemEditForm
+from payapp.models.employee import Employee
+from payapp.models.local_service_tax import LocalServiceTax
 from payapp.models.pay_roll import PayRoll, PayRollItem, AUTHORIZED, PAID
 from payapp.services.pay_roll_service import PayRollService
 
@@ -110,37 +113,37 @@ class PayRollItemsListView(ListView):
         return 'payrolls_active'
 
 
-# @method_decorator(login_required, name='dispatch')
-# class PayRollItemEditView(UpdateView):
-#     template_name = 'pay_roll_item_form.html'
-#     model = PayRollItem
-#     form_class = PayRollItemForm
-#
-#     def get(self, request, *args, **kwargs):
-#         payroll = PayRoll.objects.get(id=kwargs['pk'])
-#         date_format = "%m/%d/%Y"
-#         initial = {
-#             'id': payroll.id,
-#             'start_date': payroll.start_date.strftime(date_format),
-#             'end_date': payroll.end_date.strftime(date_format),
-#             'pay_date': payroll.pay_date.strftime(date_format)
-#         }
-#
-#         form = self.form_class(initial=initial)
-#
-#         return render(request, self.template_name, {'form': form, 'active': self.active(), 'title': self.title()})
-#
-#     def form_valid(self, form):
-#         pay_roll_service = PayRollService(self.request)
-#         pay_roll_service.update_pay_roll(form, self.kwargs['pk'])
-#
-#         pay_roll = PayRoll.objects.get(id=self.kwargs['pk'])
-#         pay_roll_service.create_pay_roll_items(pay_roll)
-#
-#         return HttpResponseRedirect('/')
-#
-#     def form_invalid(self, form):
-#         return render(self.request, self.template_name, {'form': form, 'active': 'payrolls_active', 'title': 'Edit payroll'})
+@method_decorator(login_required, name='dispatch')
+class PayRollItemEditView(UpdateView):
+    template_name = 'pay_roll_item_edit_form.html'
+    model = PayRollItem
+    form_class = PayRollItemEditForm
+
+    def form_valid(self, form):
+        pay_roll_service = PayRollService(self.request)
+        pay_roll_item = PayRollItem.objects.get(id=self.kwargs["pk"])
+        pay_roll_item.annual_local_service_tax_to_be_paid = form.cleaned_data["annual_local_service_tax_to_be_paid"]
+        pay_roll_item.net_pay = pay_roll_item.local_service_taxable_amount - pay_roll_item.annual_local_service_tax_to_be_paid
+        pay_roll_item.save()
+
+        local_service_tax_for_this_payroll = LocalServiceTax.objects.get(payroll_id=pay_roll_item.pay_roll_id, employee_id=pay_roll_item.employee_id)
+        if local_service_tax_for_this_payroll is not None:
+            local_service_tax_for_this_payroll.amount = pay_roll_item.annual_local_service_tax_to_be_paid
+            local_service_tax_for_this_payroll.save()
+        else:
+            employee = Employee.objects.get(id=pay_roll_item.employee_id)
+            payroll = PayRoll.objects.get(id=pay_roll_item.pay_roll_id)
+            local_service_tax = LocalServiceTax()
+            local_service_tax.employee = employee
+            local_service_tax.payroll = payroll
+            local_service_tax.amount = pay_roll_item.annual_local_service_tax_to_be_paid
+            local_service_tax.save()
+            # update payroll item
+            # create local service tax object
+        return HttpResponseRedirect('/payroll_items/{0}'.format(pay_roll_item.pay_roll_id))
+
+    def form_invalid(self, form):
+        return render(self.request, self.template_name, {'form': form})
 
 
 @login_required()

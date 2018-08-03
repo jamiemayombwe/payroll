@@ -35,7 +35,7 @@
                                 <th>LST</th>
                                 <th>LST paid</th>
                                 <th>Net salary</th>
-                                {% if view.item_dict.status == 1 %}
+                                {% if view.pay_roll.status == 1 %}
                                     <th></th>
                                 {% endif %}
 
@@ -51,10 +51,14 @@
                                     <td>{{ pay_roll_item.pay_as_you_earn|floatformat:3|intcomma }}</td>
                                     <td>{{ pay_roll_item.local_service_taxable_amount|floatformat:3|intcomma }}</td>
                                     <td>{{ pay_roll_item.employee.local_service_tax_amount|floatformat:3|intcomma }}</td>
-                                    <td>{{ pay_roll_item.annual_local_service_tax_to_be_paid|floatformat:3|intcomma }}</td>
+                                    {% if view.pay_roll.status == 1 %}
+                                        <td><a id="edit-payroll-item" data-edit-url="{% url 'edit_payroll_item' pay_roll_item.id %}" href="#modal-form-edit" data-toggle="modal">{{ pay_roll_item.annual_local_service_tax_to_be_paid|floatformat:3|intcomma }}</a></td>
+                                    {% else %}
+                                       <td>{{ pay_roll_item.annual_local_service_tax_to_be_paid|floatformat:3|intcomma }}</td>
+                                    {% endif %}
                                     <td>{{ pay_roll_item.net_pay|floatformat:3|intcomma }}</td>
 
-                                    {% if view.item_dict.status == 1 %}
+                                    {% if view.pay_roll.status == 1 %}
                                         {% if pay_roll_item.active %}
                                             <td><a href="#"><span class="glyphicon glyphicon-trash text-danger" ></span></a></td>
                                         {% else %}
@@ -86,7 +90,10 @@
             </div>
         </div>
     </div>
+    {# div to hold the form dialog #}
+    <div class="modal fade" id="modal-form-edit" tabindex="-1" role="dialog" aria-hidden="true">
 
+    </div>
 {% endblock %}
 
 {% block extra_js %}
@@ -112,6 +119,11 @@
                     }
                 ]
 
+            });
+
+            $('#modal-form-edit').on('show.bs.modal', function (e) {
+                var edit_url = $(e.relatedTarget).data('edit-url');
+                $(this).load(edit_url);
             });
 
         });
