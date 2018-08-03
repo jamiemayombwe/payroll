@@ -38,12 +38,19 @@
             <div class="col-md-8">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Activities</h5>
+                        <h5>Payslips</h5>
                     </div>
                     <div class="ibox-content">
                         <div>
                             <div class="feed-activity-list">
+                                {% if not view.paid_payroll_items %}
                                 No payslips yet
+                                {% else %}
+                                    {% for payroll_item in view.paid_payroll_items %}
+                                        <P>Pay date: {{ payroll_item.pay_roll.pay_date }}
+                                            Net pay: UGX {{ payroll_item.net_pay|floatformat:3|intcomma }}</P>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
 
                         </div>

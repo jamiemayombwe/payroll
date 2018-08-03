@@ -1,12 +1,13 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, UpdateView, CreateView, DetailView
 
 from payapp.forms.employee_form import EmployeeForm
 from payapp.models.employee import Employee
+from payapp.models.pay_roll import PAID
 
 REDIRECT_URL = getattr(settings, 'LOGIN_REDIRECT_URL', None)
 
@@ -87,4 +88,10 @@ class EmployeeDetailView(DetailView):
     @property
     def active(self):
         return 'employees_active'
+
+    def paid_payroll_items(self):
+        self.employee = get_object_or_404(Employee, id=self.kwargs['pk'])
+        paid_payroll_items = self.employee.payrollitem_set.filter(pay_roll__status__exact=PAID)
+        return paid_payroll_items
+
 
