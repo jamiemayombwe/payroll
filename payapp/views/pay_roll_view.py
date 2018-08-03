@@ -138,8 +138,7 @@ class PayRollItemEditView(UpdateView):
             local_service_tax.payroll = payroll
             local_service_tax.amount = pay_roll_item.annual_local_service_tax_to_be_paid
             local_service_tax.save()
-            # update payroll item
-            # create local service tax object
+
         return HttpResponseRedirect('/payroll_items/{0}'.format(pay_roll_item.pay_roll_id))
 
     def form_invalid(self, form):
@@ -152,6 +151,7 @@ def authorize_payroll(request, pk):
 
     if pay_roll is not None:
         pay_roll.status = AUTHORIZED
+        pay_roll.authorized_by = request.user.id
         pay_roll.save()
 
         return HttpResponseRedirect('/payroll_items/{0}'.format(pk))
@@ -159,15 +159,16 @@ def authorize_payroll(request, pk):
         return HttpResponseRedirect('/')
 
 
-# @login_required()
-# def mark_payroll_as_paid(request, pk):
-#     pay_roll = get_object_or_404(PayRoll, id=pk)
-#
-#     if pay_roll is not None:
-#         pay_roll.status = PAID
-#         pay_roll.save()
-#
-#         return HttpResponseRedirect('/payroll_items/{0}'.format(pk))
-#     else:
-#         return HttpResponseRedirect('/')
-#
+@login_required()
+def mark_payroll_as_paid(request, pk):
+    pay_roll = get_object_or_404(PayRoll, id=pk)
+
+    if pay_roll is not None:
+        pay_roll.status = PAID
+        pay_roll.paid_by = request.user.id
+        pay_roll.save()
+
+        return HttpResponseRedirect('/payroll_items/{0}'.format(pk))
+    else:
+        return HttpResponseRedirect('/')
+

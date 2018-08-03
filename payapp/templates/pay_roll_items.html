@@ -17,7 +17,7 @@
                         {% if view.pay_roll.status == 1 %}
                             <a class="btn btn-sm btn-primary" href="{% url 'authorize_payroll' view.pay_roll.id %}" ><span class="glyphicon glyphicon-check"></span> Authorize Payroll</a>
                         {% elif view.pay_roll.status == 2 %}
-                            <a class="btn btn-sm btn-success" href="#" ><span class="glyphicon glyphicon-check"></span> Mark as Paid</a>
+                            <a class="btn btn-sm btn-success" href="{% url 'mark_payroll_as_paid' view.pay_roll.id %}" ><span class="glyphicon glyphicon-check"></span> Mark as Paid</a>
                         {% endif %}
                     </div>
                 </div>
@@ -35,9 +35,9 @@
                                 <th>LST</th>
                                 <th>LST paid</th>
                                 <th>Net salary</th>
-                                {% if view.pay_roll.status == 1 %}
-                                    <th></th>
-                                {% endif %}
+{#                                {% if view.pay_roll.status == 1 %}#}
+{#                                    <th></th>#}
+{#                                {% endif %}#}
 
                             </tr>
                         </thead>
@@ -58,13 +58,13 @@
                                     {% endif %}
                                     <td>{{ pay_roll_item.net_pay|floatformat:3|intcomma }}</td>
 
-                                    {% if view.pay_roll.status == 1 %}
-                                        {% if pay_roll_item.active %}
-                                            <td><a href="#"><span class="glyphicon glyphicon-trash text-danger" ></span></a></td>
-                                        {% else %}
-                                           <td><a href="#"><span class="glyphicon glyphicon-plus text-info" ></span></a></td>
-                                        {% endif %}
-                                    {% endif %}
+{#                                    {% if view.pay_roll.status == 1 %}#}
+{#                                        {% if pay_roll_item.active %}#}
+{#                                            <td><a href="#"><span class="glyphicon glyphicon-trash text-danger" ></span></a></td>#}
+{#                                        {% else %}#}
+{#                                           <td><a href="#"><span class="glyphicon glyphicon-plus text-info" ></span></a></td>#}
+{#                                        {% endif %}#}
+{#                                    {% endif %}#}
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -79,9 +79,9 @@
                                 <th>LST</th>
                                 <th>LST paid</th>
                                 <th>Net salary</th>
-                                {% if view.item_dict.status == 1 %}
-                                    <th></th>
-                                {% endif %}
+{#                                {% if view.item_dict.status == 1 %}#}
+{#                                    <th></th>#}
+{#                                {% endif %}#}
                             </tr>
                         </tfoot>
                     </table>
