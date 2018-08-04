@@ -126,7 +126,11 @@ class PayRollItemEditView(UpdateView):
         pay_roll_item.net_pay = pay_roll_item.local_service_taxable_amount - pay_roll_item.annual_local_service_tax_to_be_paid
         pay_roll_item.save()
 
-        local_service_tax_for_this_payroll = LocalServiceTax.objects.get(payroll_id=pay_roll_item.pay_roll_id, employee_id=pay_roll_item.employee_id)
+        try:
+            local_service_tax_for_this_payroll = LocalServiceTax.objects.get(payroll_id=pay_roll_item.pay_roll_id, employee_id=pay_roll_item.employee_id)
+        except LocalServiceTax.DoesNotExist:
+            local_service_tax_for_this_payroll = None
+
         if local_service_tax_for_this_payroll is not None:
             local_service_tax_for_this_payroll.amount = pay_roll_item.annual_local_service_tax_to_be_paid
             local_service_tax_for_this_payroll.save()
