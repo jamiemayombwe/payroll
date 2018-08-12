@@ -12,12 +12,15 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>From: {{ view.pay_roll.start_date|date:"d M Y" }} To: {{ view.pay_roll.end_date|date:"d M Y" }}</h5>
+                    <h5 class="col-lg-12">From: {{ view.pay_roll.start_date|date:"d M Y" }} To: {{ view.pay_roll.end_date|date:"d M Y" }}</h5>
+                    <p>Prepared by: {{ view.pay_roll.prepared_by }}</p>
+                    <p>Authorized by: {{ view.pay_roll.authorized_by }}</p>
+                    <p>Approved by: {{ view.pay_roll.approved_by }}</p>
                     <div class="ibox-tools">
                         {% if view.pay_roll.status == 1 %}
-                            <a class="btn btn-sm btn-primary" href="{% url 'authorize_payroll' view.pay_roll.id %}" ><span class="glyphicon glyphicon-check"></span> Authorize Payroll</a>
+                            <a class="btn btn-sm btn-primary" data-update-status-url="{% url 'authorize_payroll' view.pay_roll.id %}" href="#modal-form-update-status" data-toggle="modal" ><span class="glyphicon glyphicon-check"></span> Authorize Payroll</a>
                         {% elif view.pay_roll.status == 2 %}
-                            <a class="btn btn-sm btn-success" href="{% url 'mark_payroll_as_paid' view.pay_roll.id %}" ><span class="glyphicon glyphicon-check"></span> Mark as Paid</a>
+                            <a class="btn btn-sm btn-success" data-update-status-url="{% url 'approve_payroll' view.pay_roll.id %}" href="#modal-form-update-status" data-toggle="modal"><span class="glyphicon glyphicon-check"></span> Mark as Paid</a>
                         {% endif %}
                     </div>
                 </div>
@@ -91,9 +94,8 @@
         </div>
     </div>
     {# div to hold the form dialog #}
-    <div class="modal fade" id="modal-form-edit" tabindex="-1" role="dialog" aria-hidden="true">
-
-    </div>
+    <div class="modal fade" id="modal-form-edit" tabindex="-1" role="dialog" aria-hidden="true"></div>
+    <div class="modal fade" id="modal-form-update-status" tabindex="-1" role="dialog" aria-hidden="true"></div>
 {% endblock %}
 
 {% block extra_js %}
@@ -124,6 +126,11 @@
             $('#modal-form-edit').on('show.bs.modal', function (e) {
                 var edit_url = $(e.relatedTarget).data('edit-url');
                 $(this).load(edit_url);
+            });
+
+            $('#modal-form-update-status').on('show.bs.modal', function (e) {
+                var url = $(e.relatedTarget).data('update-status-url');
+                $(this).load(url);
             });
 
         });

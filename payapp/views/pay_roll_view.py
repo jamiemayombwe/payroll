@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
-from payapp.forms.pay_roll_form import PayRollForm
+from payapp.forms.pay_roll_form import PayRollForm, PayRollAuthorizeForm, PayRollApproveForm
 from payapp.forms.pay_roll_item_form import PayRollItemEditForm
 from payapp.models.employee import Employee
 from payapp.models.local_service_tax import LocalServiceTax
@@ -66,6 +66,7 @@ class PayRollEditView(UpdateView):
         date_format = "%m/%d/%Y"
         initial = {
             'id': payroll.id,
+            'prepared_by': payroll.prepared_by,
             'start_date': payroll.start_date.strftime(date_format),
             'end_date': payroll.end_date.strftime(date_format),
             'pay_date': payroll.pay_date.strftime(date_format)
@@ -149,30 +150,75 @@ class PayRollItemEditView(UpdateView):
         return render(self.request, self.template_name, {'form': form})
 
 
-@login_required()
-def authorize_payroll(request, pk):
-    pay_roll = get_object_or_404(PayRoll, id=pk)
+@method_decorator(login_required, name='dispatch')
+class PayRollAuthorizeView(UpdateView):
+    template_name = 'approve_authorize_form.html'
+    model = PayRoll
+    form_class = PayRollAuthorizeForm
 
-    if pay_roll is not None:
+    @property
+    def item(self):
+        return {"title": "Authorize payroll", "action_name": "Authorized by", "action": "Authorize"}
+
+    def form_valid(self, form):
+        pay_roll = PayRoll.objects.get(id=self.kwargs["pk"])
         pay_roll.status = AUTHORIZED
-        pay_roll.authorized_by = request.user.id
+        pay_roll.authorized_by = form.cleaned_data['authorized_by']
         pay_roll.save()
 
-        return HttpResponseRedirect('/payroll_items/{0}'.format(pk))
-    else:
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/payroll_items/{0}'.format(pay_roll.id))
+
+    def form_invalid(self, form):
+        return render(self.request, self.template_name, {'form': form})
 
 
-@login_required()
-def mark_payroll_as_paid(request, pk):
-    pay_roll = get_object_or_404(PayRoll, id=pk)
+@method_decorator(login_required, name='dispatch')
+class PayRollApproveView(UpdateView):
+    template_name = 'approve_authorize_form.html'
+    model = PayRoll
+    form_class = PayRollApproveForm
 
-    if pay_roll is not None:
+    @property
+    def item(self):
+        return {"title": "Approve payroll", "action_name": "Approved by", "action": "Approve"}
+
+    def form_valid(self, form):
+        pay_roll = PayRoll.objects.get(id=self.kwargs["pk"])
         pay_roll.status = PAID
-        pay_roll.paid_by = request.user.id
+        pay_roll.approved_by = form.cleaned_data['approved_by']
+        # TODO mark deductions as paid
         pay_roll.save()
 
-        return HttpResponseRedirect('/payroll_items/{0}'.format(pk))
-    else:
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/payroll_items/{0}'.format(pay_roll.id))
+
+    def form_invalid(self, form):
+        return render(self.request, self.template_name, {'form': form})
+
+
+# @login_required()
+# def authorize_payroll(request, pk):
+#     pay_roll = get_object_or_404(PayRoll, id=pk)
+#
+#     if pay_roll is not None:
+#         pay_roll.status = AUTHORIZED
+#         pay_roll.authorized_by = request.user.id
+#         pay_roll.save()
+#
+#         return HttpResponseRedirect('/payroll_items/{0}'.format(pk))
+#     else:
+#         return HttpResponseRedirect('/')
+
+
+# @login_required()
+# def mark_payroll_as_paid(request, pk):
+#     pay_roll = get_object_or_404(PayRoll, id=pk)
+#
+#     if pay_roll is not None:
+#         pay_roll.status = PAID
+#         pay_roll.approved_by = request.user.id
+#         pay_roll.save()
+#
+#         return HttpResponseRedirect('/payroll_items/{0}'.format(pk))
+#     else:
+#         return HttpResponseRedirect('/')
 

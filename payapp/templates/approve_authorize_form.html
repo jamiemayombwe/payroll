@@ -1,0 +1,33 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">{{ view.item.title }}</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <form role="form" method="post" id="approve-authorize-form"
+                          {% if object.status == 1 %}
+                            action="{% url 'authorize_payroll' object.id %}"
+                          {% elif object.status == 2 %}
+                            action="{% url 'approve_payroll' object.id %}"
+                          {% endif %}
+                    >
+                        {% csrf_token %}
+                        {% for hidden_field in form.hidden_fields %}
+                            {{ hidden_field.errors }}
+                            {{ hidden_field }}
+                        {% endfor %}
+
+                        {{ form.as_p}}
+                        <div>
+                            <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>{{ view.item.action }}</strong></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

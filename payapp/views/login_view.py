@@ -1,11 +1,7 @@
-from datetime import datetime
-
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, logout
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render_to_response, render
-from django.template import RequestContext
-from django.views import View
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.views.generic import RedirectView
 
 

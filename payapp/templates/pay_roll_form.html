@@ -27,6 +27,13 @@
                             {{ hidden_field.errors }}
                             {{ hidden_field }}
                         {% endfor %}
+                        <div class="form-p" id="data_prepared_by">
+                            <label for="id_prepared_by">Prepared by:</label>
+                            {{ form.prepared_by }}
+                            {% for error in form.prepared_by.errors %}
+                                <strong class="text-danger">{{ error|escape }}</strong>
+                            {% endfor %}
+                        </div>
                         <div class="form-p" id="data_start_date">
                             <label for="id_start_date">Start date:</label>
                             <div class="input-group date">

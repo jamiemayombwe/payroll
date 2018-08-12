@@ -5,13 +5,14 @@ from payapp.models.pay_roll import PayRoll
 
 class PayRollForm(forms.ModelForm):
     id = forms.CharField(required=False, widget=forms.HiddenInput())
+    prepared_by = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': "form-control"}))
     start_date = forms.DateField(required=True, widget=forms.DateInput(attrs={'class': "form-control"}))
     end_date = forms.DateField(required=True, widget=forms.TextInput(attrs={'class': "form-control"}))
     pay_date = forms.DateField(required=True, widget=forms.TextInput(attrs={'class': "form-control"}))
 
     class Meta:
         model = PayRoll
-        fields = ('id', 'start_date', 'end_date', 'pay_date')
+        fields = ('id', 'prepared_by', 'start_date', 'end_date', 'pay_date')
 
     def clean(self):
         id = self.cleaned_data['id']
@@ -38,3 +39,21 @@ class PayRollForm(forms.ModelForm):
             self.add_error('pay_date', "Pay date can't be before end date")
 
         return self.cleaned_data
+
+
+class PayRollAuthorizeForm(forms.ModelForm):
+    id = forms.CharField(required=False, widget=forms.HiddenInput())
+    authorized_by = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': "form-control"}))
+
+    class Meta:
+        model = PayRoll
+        fields = ("id", "authorized_by")
+
+
+class PayRollApproveForm(forms.ModelForm):
+    id = forms.CharField(required=False, widget=forms.HiddenInput())
+    approved_by = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': "form-control"}))
+
+    class Meta:
+        model = PayRoll
+        fields = ("id", "approved_by")

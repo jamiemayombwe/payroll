@@ -43,6 +43,9 @@
                                 <th>End date</th>
                                 <th>Pay date</th>
                                 <th>Total net pay</th>
+                                <th>Prepared by</th>
+                                <th>Authorized by</th>
+                                <th>Approved by</th>
                                 <th>Status</th>
                                 <th></th>
                                 <th></th>
@@ -55,6 +58,9 @@
                                     <td>{{ pay_roll_view_model.end_date|date:"d M Y" }}</td>
                                     <td>{{ pay_roll_view_model.pay_date|date:"d M Y" }}</td>
                                     <td>{{ pay_roll_view_model.total_net_pay|floatformat:3|intcomma }}</td>
+                                    <td>{{ pay_roll_view_model.prepared_by }}</td>
+                                    <td>{{ pay_roll_view_model.authorized_by }}</td>
+                                    <td>{{ pay_roll_view_model.approved_by }}</td>
                                     <td>
                                         {% if pay_roll_view_model.status == 1 %}<span class="badge badge-warning">{{ pay_roll_view_model.status_display_name }}</span>
                                         {% elif pay_roll_view_model.status == 2 %}<span class="badge badge-success">{{ pay_roll_view_model.status_display_name }}</span>
@@ -77,6 +83,9 @@
                                 <th>End date</th>
                                 <th>Pay date</th>
                                 <th>Total net pay</th>
+                                <th>Prepared by</th>
+                                <th>Authorized by</th>
+                                <th>Approved by</th>
                                 <th>Status</th>
                                 <th></th>
                                 <th></th>

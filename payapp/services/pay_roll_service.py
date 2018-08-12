@@ -18,7 +18,7 @@ class PayRollService(object):
         pay_roll.pay_date = form.cleaned_data['pay_date']
         pay_roll.total_amount = 0
         pay_roll.status = CREATED
-        pay_roll.created_by = self.request.user.id
+        pay_roll.prepared_by = form.cleaned_data['prepared_by']
 
         pay_roll.save()
         return pay_roll
@@ -45,7 +45,6 @@ class PayRollService(object):
                 payroll_item.local_service_taxable_amount = employee.gross_income - payroll_item.nssf_contribution - payroll_item.pay_as_you_earn
                 payroll_item.annual_local_service_tax_to_be_paid = decimal.Decimal(0.00)
                 payroll_item.status = CREATED
-                payroll_item.created_by = self.request.user.id
 
                 employee_deductions = Deduction.objects.filter(status=Deduction.NOT_PAID).order_by('-created_date')
                 if employee_deductions:
@@ -84,6 +83,9 @@ class PayRollService(object):
                     pay_roll.start_date,
                     pay_roll.end_date,
                     pay_roll.pay_date,
+                    pay_roll.prepared_by,
+                    pay_roll.authorized_by,
+                    pay_roll.approved_by,
                     pay_roll.status,
                     pay_roll.get_status_display(),
                     total_net_pay)
@@ -94,6 +96,7 @@ class PayRollService(object):
         pay_roll = PayRoll.objects.get(id=pay_roll_id)
 
         if pay_roll is not None:
+            pay_roll.prepared_by = form.cleaned_data['prepared_by']
             pay_roll.start_date = form.cleaned_data['start_date']
             pay_roll.end_date = form.cleaned_data['end_date']
             pay_roll.pay_date = form.cleaned_data['pay_date']
