@@ -134,16 +134,6 @@
                 window.location = $(this).data("href");
             });
 
-            {#$("#delete-payroll").click(function(event) { // for each payroll delete#}
-            {#    event.preventDefault(); // prevent navigation#}
-            {#    console.log("inside delete")#}
-            {#    var delete_url = $(this).data("delete-url"); // get the delete form url#}
-            {#    $("#modal-form-delete").load(delete_url, function() { // load the url into the modal#}
-            {#        $(this).modal('show'); // display the modal on url load#}
-            {#    });#}
-            {#    return false; // prevent the click propagation#}
-            //});
-
             $('#modal-form-delete').on('show.bs.modal', function (e) {
                 var delete_url = $(e.relatedTarget).data('delete-url');
                 $(this).load(delete_url);

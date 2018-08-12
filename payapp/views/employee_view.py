@@ -59,7 +59,8 @@ class EmployeeEditView(UpdateView):
     def get(self, request, *args, **kwargs):
         employee = Employee.objects.get(id=kwargs['pk'])
         initial = {'name': employee.name, 'title': employee.title, 'email': employee.email,
-                   'phone_number': employee.phone_number, 'gross_income': employee.gross_income, 'tin': employee.tin,
+                   'phone_number': employee.phone_number, 'gross_income': employee.gross_income,
+                   'bank_name': employee.bank_name, 'bank_account_number': employee.bank_account_number, 'tin': employee.tin,
                    'nssf_number': employee.nssf_number, 'paye_type': employee.paye_type,
                    'local_service_tax_amount': employee.local_service_tax_amount, 'active': employee.active}
         if employee.local_service_tax_amount == 100000.000:
