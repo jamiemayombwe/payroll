@@ -194,31 +194,3 @@ class PayRollApproveView(UpdateView):
     def form_invalid(self, form):
         return render(self.request, self.template_name, {'form': form})
 
-
-# @login_required()
-# def authorize_payroll(request, pk):
-#     pay_roll = get_object_or_404(PayRoll, id=pk)
-#
-#     if pay_roll is not None:
-#         pay_roll.status = AUTHORIZED
-#         pay_roll.authorized_by = request.user.id
-#         pay_roll.save()
-#
-#         return HttpResponseRedirect('/payroll_items/{0}'.format(pk))
-#     else:
-#         return HttpResponseRedirect('/')
-
-
-# @login_required()
-# def mark_payroll_as_paid(request, pk):
-#     pay_roll = get_object_or_404(PayRoll, id=pk)
-#
-#     if pay_roll is not None:
-#         pay_roll.status = PAID
-#         pay_roll.approved_by = request.user.id
-#         pay_roll.save()
-#
-#         return HttpResponseRedirect('/payroll_items/{0}'.format(pk))
-#     else:
-#         return HttpResponseRedirect('/')
-
