@@ -47,8 +47,11 @@
                                 No payslips yet
                                 {% else %}
                                     {% for payroll_item in view.paid_payroll_items %}
-                                        <P>Pay date: {{ payroll_item.pay_roll.pay_date }}
-                                            Net pay: UGX {{ payroll_item.net_pay|floatformat:3|intcomma }}</P>
+                                        <div class="col-md-6">
+                                            Pay date: {{ payroll_item.pay_roll.pay_date }}
+                                            Net pay: UGX {{ payroll_item.net_pay|floatformat:3|intcomma }}
+                                        </div>
+                                        <div class="col-md-2"><a href="{% url 'payslip_pdf_download' payroll_item.id %}">Download</a></div>
                                     {% endfor %}
                                 {% endif %}
                             </div>

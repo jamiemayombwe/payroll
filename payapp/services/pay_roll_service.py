@@ -3,7 +3,8 @@ import decimal
 
 from payapp.models.deduction import Deduction
 from payapp.models.employee import Employee
-from payapp.models.pay_roll import PayRoll, CREATED, PayRollItem
+from payapp.models.pay_roll import PayRoll, CREATED
+from payapp.models.pay_roll_item import PayRollItem
 from payapp.viewmodels.pay_roll_view_model import PayRollViewModel
 
 

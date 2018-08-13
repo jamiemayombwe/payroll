@@ -1,13 +1,19 @@
+from io import BytesIO
+
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.template.loader import get_template
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, UpdateView, CreateView, DetailView
+from django.views.generic.base import View
+from xhtml2pdf import pisa
 
 from payapp.forms.employee_form import EmployeeForm
 from payapp.models.employee import Employee
 from payapp.models.pay_roll import PAID
+from payapp.models.pay_roll_item import PayRollItem
 
 REDIRECT_URL = getattr(settings, 'LOGIN_REDIRECT_URL', None)
 
@@ -94,5 +100,36 @@ class EmployeeDetailView(DetailView):
         self.employee = get_object_or_404(Employee, id=self.kwargs['pk'])
         paid_payroll_items = self.employee.payrollitem_set.filter(pay_roll__status__exact=PAID)
         return paid_payroll_items
+
+
+def render_to_pdf(html_template, context={}):
+    template = get_template(html_template)
+    html = template.render(context)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None
+
+
+@method_decorator(login_required, name='dispatch')
+class PayslipPdfView(View):
+    template_name = "payslip.html"
+    model = PayRollItem
+
+    def get(self, request, *args, **kwargs):
+        pay_roll_item = PayRollItem.objects.get(id=kwargs['pk'])
+        data = {'name': pay_roll_item.employee.name,
+                'title': pay_roll_item.employee.title,
+                'pay_date': pay_roll_item.pay_roll.pay_date,
+                'gross_income': pay_roll_item.employee.gross_income,
+                'paye_amount': pay_roll_item.pay_as_you_earn,
+                'nssf_amount': pay_roll_item.nssf_contribution,
+                'net_pay': pay_roll_item.net_pay
+                }
+
+        pdf = render_to_pdf(self.template_name, data)
+        return HttpResponse(pdf, content_type='application/pdf')
+
 
 

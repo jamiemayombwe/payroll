@@ -19,6 +19,20 @@ img.app-logo{
     padding: 10px;
 }
 
+img.payslip-logo{
+    width: 80px;
+    height: 80px;
+    padding: 10px;
+}
+
+.payslip-info{
+    margin-left: -7px;
+}
+
+.invoice-total > tbody > tr > td:first-child {
+    text-align: left;
+}
+
 .clickable-row:hover{
     cursor: pointer;
 }

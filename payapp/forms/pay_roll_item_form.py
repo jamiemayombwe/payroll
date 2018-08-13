@@ -1,6 +1,6 @@
 from django import forms
 
-from payapp.models.pay_roll import PayRollItem
+from payapp.models.pay_roll_item import PayRollItem
 
 
 class PayRollItemEditForm(forms.ModelForm):

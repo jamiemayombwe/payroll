@@ -23,6 +23,10 @@
                             <a class="btn btn-sm btn-primary" data-update-status-url="{% url 'authorize_payroll' view.pay_roll.id %}" href="#modal-form-update-status" data-toggle="modal" ><span class="glyphicon glyphicon-check"></span> Authorize Payroll</a>
                         {% elif view.pay_roll.status == 2 %}
                             <a class="btn btn-sm btn-success" data-update-status-url="{% url 'approve_payroll' view.pay_roll.id %}" href="#modal-form-update-status" data-toggle="modal"><span class="glyphicon glyphicon-check"></span> Mark as Paid</a>
+                        {% elif view.pay_roll.status == 3 %}
+                            <a class="btn btn-sm btn-info" href="{% url 'bank_payroll_view' view.pay_roll.id %}"> View bank payroll</a>
+                            <a class="btn btn-sm btn-info" href="{% url 'ura_payroll_view' view.pay_roll.id %}"> View URA payroll</a>
+
                         {% endif %}
                     </div>
                 </div>
