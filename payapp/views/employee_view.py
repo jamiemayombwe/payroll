@@ -106,10 +106,10 @@ def render_to_pdf(html_template, context={}):
     template = get_template(html_template)
     html = template.render(context)
     result = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
     if not pdf.err:
         return HttpResponse(result.getvalue(), content_type='application/pdf')
-    return None
+    return HttpResponse("Error rendering payslip pdf", status=400)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -128,8 +128,9 @@ class PayslipPdfView(View):
                 'net_pay': pay_roll_item.net_pay
                 }
 
-        pdf = render_to_pdf(self.template_name, data)
-        return HttpResponse(pdf, content_type='application/pdf')
+        # return render(request, self.template_name, data)
+        # return HttpResponse(pdf, content_type='application/pdf')
+        return render_to_pdf(self.template_name, data)
 
 
 

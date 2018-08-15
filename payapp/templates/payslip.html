@@ -1,20 +1,19 @@
-{% load static %}
 {% load humanize %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>Payslip</title>
-     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
     <style type="text/css">
+
         body {
             font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: #2f4050;
             font-size: 13px;
             color: #676a6c;
             overflow-x: hidden;
+            box-sizing: border-box;
+            line-height: 1.42857143;
         }
 
         .gray-bg {
@@ -28,32 +27,6 @@
             padding: 40px 0 40px 0;
         }
 
-        .ibox-content {
-            background-color: #ffffff;
-            color: inherit;
-            padding: 15px 20px 20px 20px;
-            border-color: #e7eaec;
-            border-image: none;
-            border-style: solid solid none;
-            border-width: 1px 0;
-            clear: both;
-        }
-
-        .row {
-            margin-right: -15px;
-            margin-left: -15px;
-        }
-        .col-sm-8 {
-            width: 66.66666667%;
-        }
-
-        .col-sm-8,  .col-sm-12 {
-            float: left;
-        }
-        h2 {
-            font-size: 24px;
-        }
-
         .col-md-3{
             width: 32%;
         }
@@ -64,8 +37,53 @@
             padding: 10px;
         }
 
+        h2 {
+            font-size: 20px;
+        }
+
+        .ibox-content {
+            background-color: #ffffff;
+            color: inherit;
+            padding: 5px;
+            border-color: #e7eaec;
+        }
+
+        .row {
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+
+        .col-lg-12, .col-sm-12, .col-sm-8, .col-md-3 {
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        .wrapper-content {
+            padding: 5px;
+        }
+
+        .col-sm-8 {
+            width: 66.66666667%;
+        }
+
+        .col-sm-8,  .col-sm-12 {
+            float: left;
+        }
+
         .payslip-info{
             margin-left: -7px;
+        }
+
+        p {
+            margin: 0 0 10px;
+            box-sizing: border-box;
+            display: block;
+            -webkit-margin-before: 1em;
+            -webkit-margin-after: 1em;
+            -webkit-margin-start: 0;
+            -webkit-margin-end: 0;
         }
 
         .table {
@@ -80,18 +98,21 @@
             border-collapse: collapse;
             display: table;
             border-color: grey;
+            box-sizing: border-box;
         }
 
         tbody {
             display: table-row-group;
             vertical-align: middle;
             border-color: inherit;
+            box-sizing: border-box;
         }
 
         tr {
             display: table-row;
             vertical-align: inherit;
             border-color: inherit;
+            box-sizing: border-box;
         }
 
         .invoice-total > tbody > tr > td:first-child {
@@ -108,17 +129,16 @@
             padding: 8px;
             vertical-align: top;
         }
+
         .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
             padding: 8px;
             line-height: 1.42857143;
             vertical-align: top;
             border-top: 1px solid #ddd;
         }
-        td, th {
-            padding: 0;
-        }
 
         td, th {
+            padding: 0;
             display: table-cell;
             vertical-align: inherit;
         }
@@ -126,6 +146,7 @@
         .m-t {
             margin-top: 15px;
         }
+
         .well {
             min-height: 20px;
             padding: 19px;
@@ -143,8 +164,8 @@
     <div class="logo-container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="wrapper wrapper-content animated fadeInRight">
-                    <div class="ibox-content p-xl">
+                <div class="wrapper-content">
+                    <div class="ibox-content">
                         <div class="row">
                             <div class="col-md-3">
                                 <img src="/static/images/unhcr_logo.jpg" class="payslip-logo" >
