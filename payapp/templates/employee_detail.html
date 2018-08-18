@@ -44,16 +44,35 @@
                         <div>
                             <div class="feed-activity-list">
                                 {% if not view.paid_payroll_items %}
-                                No payslips yet
+                                    No payslips yet
                                 {% else %}
-                                    {% for payroll_item in view.paid_payroll_items %}
-                                        <div class="col-md-6">
-                                            Pay date: {{ payroll_item.pay_roll.pay_date }}
-                                            Net pay: UGX {{ payroll_item.net_pay|floatformat:3|intcomma }}
-                                        </div>
-                                        <div class="col-md-2"><a href="{% url 'payslip_pdf_download' payroll_item.id %}">Download</a></div>
-                                    {% endfor %}
+                                    <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Pay date</th>
+                                            <th>Amount paid</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for payroll_item in view.paid_payroll_items %}
+                                            <tr>
+                                            <td>{{ payroll_item.pay_roll.pay_date|date:"d M Y" }}</td>
+                                            <td>UGX {{ payroll_item.net_pay|floatformat:3|intcomma }}</td>
+                                            <td><a href="{% url 'payslip_pdf_download' payroll_item.id %}"><span class="glyphicon glyphicon-download text-success" ></span></a></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Pay date</th>
+                                            <th>Amount paid</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                                 {% endif %}
+
                             </div>
 
                         </div>

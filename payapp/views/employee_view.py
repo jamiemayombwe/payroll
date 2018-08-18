@@ -98,7 +98,7 @@ class EmployeeDetailView(DetailView):
 
     def paid_payroll_items(self):
         self.employee = get_object_or_404(Employee, id=self.kwargs['pk'])
-        paid_payroll_items = self.employee.payrollitem_set.filter(pay_roll__status__exact=PAID)
+        paid_payroll_items = self.employee.payrollitem_set.filter(pay_roll__status__exact=PAID)[:12]
         return paid_payroll_items
 
 
@@ -128,8 +128,6 @@ class PayslipPdfView(View):
                 'net_pay': pay_roll_item.net_pay
                 }
 
-        # return render(request, self.template_name, data)
-        # return HttpResponse(pdf, content_type='application/pdf')
         return render_to_pdf(self.template_name, data)
 
 

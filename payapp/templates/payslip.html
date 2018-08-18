@@ -183,26 +183,26 @@
                                 <span><strong>Position:</strong>  {{ title }}</span><br />
                             </p>
                             <p>
-                                <span><strong>Pay date:</strong>  {{ pay_date }}</span>
+                                <span><strong>Pay date:</strong>  {{ pay_date|date:"d M Y" }}</span>
                             </p>
                         </div>
                         <table class="table invoice-total">
                             <tbody>
                                 <tr>
                                     <td><strong>Gross income :</strong></td>
-                                    <td>UGX{{ gross_income|floatformat:3|intcomma }}</td>
+                                    <td>UGX {{ gross_income|floatformat:3|intcomma }}</td>
                                 </tr>
                                 <tr>
                                     <td><strong>PAYE :</strong></td>
-                                    <td>UGX{{ paye_amount|floatformat:3|intcomma }}</td>
+                                    <td>UGX {{ paye_amount|floatformat:3|intcomma }}</td>
                                 </tr>
                                 <tr>
                                     <td><strong>NSSF :</strong></td>
-                                    <td>UGX{{ nssf_amount|floatformat:3|intcomma }}</td>
+                                    <td>UGX {{ nssf_amount|floatformat:3|intcomma }}</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Net pay :</strong></td>
-                                    <td>UGX{{ net_pay|floatformat:3|intcomma }}</td>
+                                    <td>UGX {{ net_pay|floatformat:3|intcomma }}</td>
                                 </tr>
                             </tbody>
                         </table>
