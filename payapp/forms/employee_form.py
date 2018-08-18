@@ -11,7 +11,7 @@ class EmployeeForm(forms.ModelForm):
     gross_income = forms.DecimalField(required=True, widget=forms.TextInput(attrs={'class': "form-control"}))
     bank_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': "form-control"}))
     bank_account_number = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': "form-control"}))
-    tin = forms.CharField(required=True, label='TIN', widget=forms.TextInput(attrs={'class': "form-control"}))
+    tin = forms.CharField(required=False, label='TIN', widget=forms.TextInput(attrs={'class': "form-control"}))
     nssf_number = forms.CharField(required=False, label='NSSF number', widget=forms.TextInput(attrs={'class': "form-control"}))
     paye_type = forms.ChoiceField(required=True, label='Select PAYE method for this employee', choices=Employee.PAYE_METHODS, widget=forms.Select(attrs={'class': "form-control m-b"}))
     local_service_tax_amount = forms.ChoiceField(required=True, label='Select Local Service Tax amount for this employee', choices=Employee.LST_AMOUNTS, widget=forms.Select(attrs={'class': "form-control m-b"}))
