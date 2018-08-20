@@ -69,12 +69,26 @@ class EmployeeEditView(UpdateView):
                    'bank_name': employee.bank_name, 'bank_account_number': employee.bank_account_number, 'tin': employee.tin,
                    'nssf_number': employee.nssf_number, 'paye_type': employee.paye_type,
                    'local_service_tax_amount': employee.local_service_tax_amount, 'active': employee.active}
-        if employee.local_service_tax_amount == 100000.000:
+        if employee.local_service_tax_amount == 10000.000:
             initial['local_service_tax_amount'] = Employee.LST_AMOUNTS[0]
-        if employee.local_service_tax_amount == 80000.000:
+        if employee.local_service_tax_amount == 20000.000:
             initial['local_service_tax_amount'] = Employee.LST_AMOUNTS[1]
-        if employee.local_service_tax_amount == 70000.000:
+        if employee.local_service_tax_amount == 30000.000:
             initial['local_service_tax_amount'] = Employee.LST_AMOUNTS[2]
+        if employee.local_service_tax_amount == 40000.000:
+            initial['local_service_tax_amount'] = Employee.LST_AMOUNTS[3]
+        if employee.local_service_tax_amount == 50000.000:
+            initial['local_service_tax_amount'] = Employee.LST_AMOUNTS[4]
+        if employee.local_service_tax_amount == 60000.000:
+            initial['local_service_tax_amount'] = Employee.LST_AMOUNTS[5]
+        if employee.local_service_tax_amount == 70000.000:
+            initial['local_service_tax_amount'] = Employee.LST_AMOUNTS[6]
+        if employee.local_service_tax_amount == 80000.000:
+            initial['local_service_tax_amount'] = Employee.LST_AMOUNTS[7]
+        if employee.local_service_tax_amount == 90000.000:
+            initial['local_service_tax_amount'] = Employee.LST_AMOUNTS[8]
+        if employee.local_service_tax_amount == 100000.000:
+            initial['local_service_tax_amount'] = Employee.LST_AMOUNTS[9]
         form = self.form_class(initial=initial)
 
         return render(request, self.template_name, {'form': form, 'active': self.active(), 'title': self.title()})
