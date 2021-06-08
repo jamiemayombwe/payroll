@@ -10,7 +10,7 @@ heroku==0.1.4
 html5lib==1.0.1
 httplib2==0.11.3
 idna==2.6
-Pillow==5.2.0
+Pillow==8.2.0
 pisa==3.0.33
 psycopg2==2.7.4
 PyPDF2==1.26.0
